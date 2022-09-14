@@ -10,31 +10,33 @@ if (in_array(PHP_SAPI, ['cli', 'phpdbg'], true)) {
 }
 
 require dirname(__DIR__, 3).'/vendor/autoload.php';
-require __DIR__.'/ContainerJT5qz8p/App_KernelDevDebugContainer.php';
-require __DIR__.'/ContainerJT5qz8p/getSession_Storage_NativeService.php';
-require __DIR__.'/ContainerJT5qz8p/getSessionService.php';
-require __DIR__.'/ContainerJT5qz8p/getServicesResetterService.php';
-require __DIR__.'/ContainerJT5qz8p/getSecrets_VaultService.php';
-require __DIR__.'/ContainerJT5qz8p/getRouting_LoaderService.php';
-require __DIR__.'/ContainerJT5qz8p/getFilesystemService.php';
-require __DIR__.'/ContainerJT5qz8p/getErrorControllerService.php';
-require __DIR__.'/ContainerJT5qz8p/getContainer_EnvVarProcessorsLocatorService.php';
-require __DIR__.'/ContainerJT5qz8p/getContainer_EnvVarProcessorService.php';
-require __DIR__.'/ContainerJT5qz8p/getCacheClearerService.php';
-require __DIR__.'/ContainerJT5qz8p/getCache_SystemClearerService.php';
-require __DIR__.'/ContainerJT5qz8p/getCache_SystemService.php';
-require __DIR__.'/ContainerJT5qz8p/getCache_GlobalClearerService.php';
-require __DIR__.'/ContainerJT5qz8p/getCache_AppClearerService.php';
-require __DIR__.'/ContainerJT5qz8p/getCache_AppService.php';
-require __DIR__.'/ContainerJT5qz8p/getArgumentResolver_ServiceService.php';
-require __DIR__.'/ContainerJT5qz8p/getTemplateControllerService.php';
-require __DIR__.'/ContainerJT5qz8p/getRedirectControllerService.php';
-require __DIR__.'/ContainerJT5qz8p/get_ServiceLocator_Beq5mCoService.php';
-require __DIR__.'/ContainerJT5qz8p/get_ServiceLocator_C9JCBPCService.php';
+require __DIR__.'/ContainerAnqrVcr/App_KernelDevDebugContainer.php';
+require __DIR__.'/ContainerAnqrVcr/getSession_Storage_NativeService.php';
+require __DIR__.'/ContainerAnqrVcr/getSessionService.php';
+require __DIR__.'/ContainerAnqrVcr/getServicesResetterService.php';
+require __DIR__.'/ContainerAnqrVcr/getSecrets_VaultService.php';
+require __DIR__.'/ContainerAnqrVcr/getRouting_LoaderService.php';
+require __DIR__.'/ContainerAnqrVcr/getFilesystemService.php';
+require __DIR__.'/ContainerAnqrVcr/getErrorControllerService.php';
+require __DIR__.'/ContainerAnqrVcr/getContainer_EnvVarProcessorsLocatorService.php';
+require __DIR__.'/ContainerAnqrVcr/getContainer_EnvVarProcessorService.php';
+require __DIR__.'/ContainerAnqrVcr/getCacheClearerService.php';
+require __DIR__.'/ContainerAnqrVcr/getCache_SystemClearerService.php';
+require __DIR__.'/ContainerAnqrVcr/getCache_SystemService.php';
+require __DIR__.'/ContainerAnqrVcr/getCache_GlobalClearerService.php';
+require __DIR__.'/ContainerAnqrVcr/getCache_AppClearerService.php';
+require __DIR__.'/ContainerAnqrVcr/getCache_AppService.php';
+require __DIR__.'/ContainerAnqrVcr/getArgumentResolver_ServiceService.php';
+require __DIR__.'/ContainerAnqrVcr/getTemplateControllerService.php';
+require __DIR__.'/ContainerAnqrVcr/getRedirectControllerService.php';
+require __DIR__.'/ContainerAnqrVcr/getTestControllerService.php';
+require __DIR__.'/ContainerAnqrVcr/get_ServiceLocator_Beq5mCoService.php';
+require __DIR__.'/ContainerAnqrVcr/get_ServiceLocator_C9JCBPCService.php';
 
 $classes = [];
 $classes[] = 'Symfony\Bundle\FrameworkBundle\FrameworkBundle';
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
+$classes[] = 'App\Controller\TestController';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController';
 $classes[] = 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController';
 $classes[] = 'Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver';
@@ -94,9 +96,4 @@ $classes[] = 'Symfony\Component\HttpKernel\EventListener\SessionListener';
 $classes[] = 'Symfony\Component\HttpKernel\EventListener\StreamedResponseListener';
 $classes[] = 'Symfony\Component\HttpKernel\EventListener\ValidateRequestListener';
 
-Preloader::preload($classes);
-
-$classes = [];
-$classes[] = 'Symfony\\Component\\Routing\\Generator\\CompiledUrlGenerator';
-$classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrlMatcher';
 Preloader::preload($classes);
