@@ -3,9 +3,9 @@ index:
    controller: App\Controller\TestController::index
 
 test:
-   path: /test/{age<\d+>?0}
+   path: /test/{age?0}
    controller: App\Controller\TestController::test
   #  defaults:
   #    age: 0
-  #  requirements:
-  #    age: \d+
+   requirements:
+     age: \d+
