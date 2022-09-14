@@ -27,4 +27,3 @@ yarn-error.log
 node_modules
 
 .bash_history
-.composer/
