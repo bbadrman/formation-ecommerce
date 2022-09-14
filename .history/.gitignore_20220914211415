@@ -26,5 +26,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 node_modules
 
-.bash_history
-.composer/
+/history
