@@ -15,7 +15,7 @@ class TestController
 
     public function test(Request $request, $age)
     {
-        // ajoute $age sur (Request $request, $age) et comment la ligne ci desu
+        
         // $age = $request->attributes->get('age');
         return new Response("Vous avez $age ans!"); 
 
