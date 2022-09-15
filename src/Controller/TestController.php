@@ -28,4 +28,7 @@ class TestController
         return new Response("Vous avez $age ans!"); 
 
     }
+    public function show(){
+        return new Response("Vous avez 39 ans!"); 
+    }
 }

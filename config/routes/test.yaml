@@ -1,11 +1,11 @@
 test:
-   path: /test/{age<\d+>?0}
-   controller: App\Controller\TestController::test
-   methods: [GET, POST]
-   host: localhost
-   schemes: [https, https]
-   #  host: {subdomaine}.monsite.com
-  #  defaults:
-  #    age: 0
-  #  requirements:
-  #    age: \d+
+  path: /test/{age<\d+>?0}
+  controller: App\Controller\TestController::test
+  methods: [GET, POST]  
+  host: localhost
+  schemes: [http]
+ 
+api_post_show:
+  path: /api
+  controller: App\Controller\TestController::show
+  methods: GET|HEAD
