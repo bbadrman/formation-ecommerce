@@ -13,6 +13,11 @@ class TestController
         die();
     }
 
+    /**
+     * Undocumented function
+     *
+     * @Route("/test/{age<\d+>?0}", name="test", methods={"GET", "POST"}, host: "localhost", schemes={"http"})  
+     */
     public function test(Request $request, $age)
     {
         // ajoute $age sur (Request $request, $age) et comment la ligne ci desu
