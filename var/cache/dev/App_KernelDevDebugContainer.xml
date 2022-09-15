@@ -8,11 +8,21 @@
     <parameter key="kernel.logs_dir">/var/www/html/var/log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
+      <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
+      <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
         <parameter key="path">/var/www/html/vendor/symfony/framework-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\FrameworkBundle</parameter>
+      </parameter>
+      <parameter key="DebugBundle" type="collection">
+        <parameter key="path">/var/www/html/vendor/symfony/debug-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\DebugBundle</parameter>
+      </parameter>
+      <parameter key="SensioFrameworkExtraBundle" type="collection">
+        <parameter key="path">/var/www/html/vendor/sensio/framework-extra-bundle/src</parameter>
+        <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -69,6 +79,7 @@
     <parameter key="router.resource">kernel::loadRoutes</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
+    <parameter key="env(VAR_DUMPER_SERVER)">127.0.0.1:9912</parameter>
     <parameter key="console.command.ids" type="collection"/>
   </parameters>
   <services>
@@ -250,6 +261,22 @@
         <argument>-128</argument>
       </call>
       <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="locale_aware_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>15</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service" id="locale_aware_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>-15</argument>
+      </call>
+      <call method="addListener">
         <argument>console.error</argument>
         <argument type="collection">
           <argument type="service" id="console.error_listener"/>
@@ -337,6 +364,54 @@
         </argument>
         <argument>-64</argument>
       </call>
+      <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.dump_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>1024</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller</argument>
+        <argument type="collection">
+          <argument type="service" id="sensio_framework_extra.controller.listener"/>
+          <argument>onKernelController</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller</argument>
+        <argument type="collection">
+          <argument type="service" id="sensio_framework_extra.converter.listener"/>
+          <argument>onKernelController</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller</argument>
+        <argument type="collection">
+          <argument type="service" id="sensio_framework_extra.cache.listener"/>
+          <argument>onKernelController</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service" id="sensio_framework_extra.cache.listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.controller_arguments</argument>
+        <argument type="collection">
+          <argument type="service" id="framework_extra_bundle.event.is_granted"/>
+          <argument>onKernelControllerArguments</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
     </service>
     <service id="http_kernel" class="Symfony\Component\HttpKernel\HttpKernel" public="true">
       <tag name="container.hot_path"/>
@@ -410,12 +485,24 @@
       <argument type="service" id="service_container"/>
       <argument type="service" id=".service_locator.hbcatdF"/>
     </service>
+    <service id="locale_aware_listener" class="Symfony\Component\HttpKernel\EventListener\LocaleAwareListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument type="iterator">
+        <argument type="service" id="slugger"/>
+      </argument>
+      <argument type="service" id="request_stack"/>
+    </service>
     <service id="container.env_var_processor" class="Symfony\Component\DependencyInjection\EnvVarProcessor" public="false">
       <tag name="container.env_var_processor"/>
       <argument type="service" id="service_container"/>
       <argument type="tagged_iterator" tag="container.env_var_loader"/>
     </service>
-    <service id="slugger" class="stdClass"/>
+    <service id="slugger" class="Symfony\Component\String\Slugger\AsciiSlugger" public="false">
+      <tag name="kernel.locale_aware"/>
+      <argument>en</argument>
+    </service>
     <service id="container.getenv" class="Closure" public="false">
       <tag name="routing.expression_language_function" function="env"/>
       <argument type="collection">
@@ -958,6 +1045,15 @@
       <call method="addLoader">
         <argument type="service" id="routing.loader.container"/>
       </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.directory"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.file"/>
+      </call>
     </service>
     <service id="routing.loader.xml" class="Symfony\Component\Routing\Loader\XmlFileLoader" public="false">
       <tag name="routing.loader"/>
@@ -1046,6 +1142,49 @@
     <service id="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" class="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" public="true">
       <argument>null</argument>
     </service>
+    <service id="routing.loader.annotation" class="Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="annotations.reader"/>
+    </service>
+    <service id="routing.loader.annotation.directory" class="Symfony\Component\Routing\Loader\AnnotationDirectoryLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id="routing.loader.annotation.file" class="Symfony\Component\Routing\Loader\AnnotationFileLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id=".2_PhpArrayAdapter~XoAJ6ol" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" public="false">
+      <argument>/var/www/html/var/cache/dev/annotations.php</argument>
+      <argument type="service" id="cache.annotations"/>
+      <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
+    </service>
+    <service id=".1_ArrayCache~XoAJ6ol" class="Doctrine\Common\Cache\ArrayCache" public="false"/>
+    <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader" public="false">
+      <call method="addGlobalIgnoredName">
+        <argument>required</argument>
+        <argument type="service" id="annotations.dummy_registry"/>
+      </call>
+    </service>
+    <service id="annotations.dummy_registry" class="Doctrine\Common\Annotations\AnnotationRegistry" public="false">
+      <call method="registerUniqueLoader">
+        <argument>class_exists</argument>
+      </call>
+    </service>
+    <service id="annotations.filesystem_cache" class="Doctrine\Common\Cache\FilesystemCache" public="false">
+      <argument></argument>
+    </service>
+    <service id="annotations.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer" public="false">
+      <argument type="service" id="annotations.reader"/>
+      <argument>/var/www/html/var/cache/dev/annotations.php</argument>
+      <argument>#^Symfony\\(?:Component\\HttpKernel\\|Bundle\\FrameworkBundle\\Controller\\(?!.*Controller$))#</argument>
+      <argument>true</argument>
+    </service>
+    <service id="annotations.cache" class="Symfony\Component\Cache\DoctrineProvider" public="false">
+      <argument type="service" id=".2_PhpArrayAdapter~XoAJ6ol"/>
+    </service>
     <service id="secrets.vault" class="Symfony\Bundle\FrameworkBundle\Secrets\SodiumVault">
       <tag name="container.env_var_loader"/>
       <argument>/var/www/html/config/secrets/dev</argument>
@@ -1058,6 +1197,151 @@
     </service>
     <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
       <argument>/var/www/html/.env.dev.local</argument>
+    </service>
+    <service id=".6_HtmlDescriptor~jyJR55V" class="Symfony\Component\VarDumper\Command\Descriptor\HtmlDescriptor" public="false">
+      <argument type="service" id="var_dumper.html_dumper"/>
+    </service>
+    <service id=".5_CliDescriptor~jyJR55V" class="Symfony\Component\VarDumper\Command\Descriptor\CliDescriptor" public="false">
+      <argument type="service" id="var_dumper.contextualized_cli_dumper.inner"/>
+    </service>
+    <service id=".4_CliContextProvider~jyJR55V" class="Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider" public="false"/>
+    <service id=".3_RequestContextProvider~jyJR55V" class="Symfony\Component\VarDumper\Dumper\ContextProvider\RequestContextProvider" public="false">
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id=".2_SourceContextProvider~jyJR55V" class="Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider" public="false">
+      <argument>UTF-8</argument>
+      <argument>/var/www/html</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+    </service>
+    <service id=".1_SourceContextProvider~jyJR55V" class="Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider" public="false">
+      <argument>UTF-8</argument>
+      <argument>/var/www/html</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+    </service>
+    <service id="twig.extension.dump" class="Symfony\Bridge\Twig\Extension\DumpExtension" public="false">
+      <tag name="twig.extension"/>
+      <argument type="service" id="var_dumper.cloner"/>
+      <argument type="service" id="var_dumper.html_dumper"/>
+    </service>
+    <service id="data_collector.dump" class="Symfony\Component\HttpKernel\DataCollector\DumpDataCollector" public="true">
+      <tag name="data_collector" id="dump" template="@Debug/Profiler/dump.html.twig" priority="240"/>
+      <argument>null</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+      <argument>UTF-8</argument>
+      <argument>null</argument>
+      <argument type="service" id="var_dumper.server_connection"/>
+    </service>
+    <service id="debug.dump_listener" class="Symfony\Component\HttpKernel\EventListener\DumpListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="var_dumper.cloner"/>
+      <argument type="service" id="var_dumper.contextualized_cli_dumper"/>
+      <argument type="service" id="var_dumper.server_connection"/>
+    </service>
+    <service id="var_dumper.cloner" class="Symfony\Component\VarDumper\Cloner\VarCloner" public="true">
+      <call method="setMaxItems">
+        <argument>2500</argument>
+      </call>
+      <call method="setMinDepth">
+        <argument>1</argument>
+      </call>
+      <call method="setMaxString">
+        <argument>-1</argument>
+      </call>
+      <call method="addCasters">
+        <argument type="collection">
+          <argument key="Closure">Symfony\Component\VarDumper\Caster\ReflectionCaster::unsetClosureFileInfo</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="var_dumper.contextualized_cli_dumper" class="Symfony\Component\VarDumper\Dumper\ContextualizedDumper" public="false">
+      <argument type="service" id="var_dumper.contextualized_cli_dumper.inner"/>
+      <argument type="collection">
+        <argument key="source" type="service" id=".1_SourceContextProvider~jyJR55V"/>
+      </argument>
+    </service>
+    <service id="var_dumper.html_dumper" class="Symfony\Component\VarDumper\Dumper\HtmlDumper" public="false">
+      <argument>null</argument>
+      <argument>UTF-8</argument>
+      <argument>0</argument>
+      <call method="setDisplayOptions">
+        <argument type="collection">
+          <argument key="fileLinkFormat" type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+        </argument>
+      </call>
+    </service>
+    <service id="var_dumper.server_connection" class="Symfony\Component\VarDumper\Server\Connection" public="false">
+      <argument>tcp://%env(VAR_DUMPER_SERVER)%</argument>
+      <argument type="collection">
+        <argument key="source" type="service" id=".2_SourceContextProvider~jyJR55V"/>
+        <argument key="request" type="service" id=".3_RequestContextProvider~jyJR55V"/>
+        <argument key="cli" type="service" id=".4_CliContextProvider~jyJR55V"/>
+      </argument>
+    </service>
+    <service id="var_dumper.dump_server" class="Symfony\Component\VarDumper\Server\DumpServer" public="false">
+      <tag name="monolog.logger" channel="debug"/>
+      <argument>tcp://%env(VAR_DUMPER_SERVER)%</argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="var_dumper.command.server_dump" class="Symfony\Component\VarDumper\Command\ServerDumpCommand" public="false">
+      <tag name="console.command" command="server:dump"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="var_dumper.dump_server"/>
+      <argument type="collection">
+        <argument key="cli" type="service" id=".5_CliDescriptor~jyJR55V"/>
+        <argument key="html" type="service" id=".6_HtmlDescriptor~jyJR55V"/>
+      </argument>
+      <call method="setName">
+        <argument>server:dump</argument>
+      </call>
+    </service>
+    <service id="sensio_framework_extra.controller.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="annotations.reader"/>
+    </service>
+    <service id="sensio_framework_extra.converter.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="sensio_framework_extra.converter.manager"/>
+      <argument>true</argument>
+    </service>
+    <service id="sensio_framework_extra.converter.manager" class="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager">
+      <call method="add">
+        <argument type="service" id="sensio_framework_extra.converter.doctrine.orm"/>
+        <argument>0</argument>
+        <argument>doctrine.orm</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id="framework_extra_bundle.date_time_param_converter"/>
+        <argument>0</argument>
+        <argument>datetime</argument>
+      </call>
+    </service>
+    <service id="sensio_framework_extra.converter.doctrine.orm" class="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DoctrineParamConverter">
+      <tag name="request.param_converter" converter="doctrine.orm"/>
+      <argument>null</argument>
+      <argument>null</argument>
+    </service>
+    <service id="framework_extra_bundle.date_time_param_converter" class="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\DateTimeParamConverter">
+      <tag name="request.param_converter" converter="datetime"/>
+    </service>
+    <service id="sensio_framework_extra.view.guesser" class="Sensio\Bundle\FrameworkExtraBundle\Templating\TemplateGuesser">
+      <argument type="service" id="kernel"/>
+    </service>
+    <service id="sensio_framework_extra.cache.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\HttpCacheListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="framework_extra_bundle.event.is_granted" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\IsGrantedListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="framework_extra_bundle.argument_name_convertor"/>
+      <argument>null</argument>
+    </service>
+    <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter">
+      <argument type="service" id="argument_metadata_factory"/>
     </service>
     <service id=".service_locator.WaGDpDt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
@@ -1159,11 +1443,21 @@
         <argument key="kernel" type="service" id="kernel"/>
       </argument>
     </service>
+    <service id="var_dumper.contextualized_cli_dumper.inner" class="Symfony\Component\VarDumper\Dumper\CliDumper" public="false">
+      <argument>null</argument>
+      <argument>UTF-8</argument>
+      <argument>0</argument>
+      <call method="setDisplayOptions">
+        <argument type="collection">
+          <argument key="fileLinkFormat" type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+        </argument>
+      </call>
+    </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.bu2JnCr"/>
+      <argument type="service" id=".service_locator.DxXCUNB"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -1188,9 +1482,10 @@
         <argument key="secrets:list">console.command.secrets_list</argument>
         <argument key="secrets:decrypt-to-local">console.command.secrets_decrypt_to_local</argument>
         <argument key="secrets:encrypt-from-local">console.command.secrets_encrypt_from_local</argument>
+        <argument key="server:dump">var_dumper.command.server_dump</argument>
       </argument>
     </service>
-    <service id=".service_locator.bu2JnCr" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.DxXCUNB" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -1216,6 +1511,7 @@
         <argument key="console.command.secrets_remove" type="service" id="console.command.secrets_remove"/>
         <argument key="console.command.secrets_set" type="service" id="console.command.secrets_set"/>
         <argument key="console.command.yaml_lint" type="service" id="console.command.yaml_lint"/>
+        <argument key="var_dumper.command.server_dump" type="service" id="var_dumper.command.server_dump"/>
       </argument>
     </service>
     <service id="Psr\Container\ContainerInterface" alias="service_container" public="false">
@@ -1263,8 +1559,11 @@
     <service id="Symfony\Component\Routing\Matcher\UrlMatcherInterface" alias="router.default" public="false"/>
     <service id="Symfony\Component\Routing\RequestContextAwareInterface" alias="router.default" public="false"/>
     <service id="Symfony\Component\Routing\RequestContext" alias="router.request_context" public="false"/>
+    <service id="annotation_reader" alias="annotations.reader" public="false"/>
+    <service id="Doctrine\Common\Annotations\Reader" alias="annotations.reader" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="argument_resolver.controller_locator" alias=".service_locator.iEz6L2D"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
+    <service id="var_dumper.cli_dumper" alias="var_dumper.contextualized_cli_dumper" public="false"/>
   </services>
 </container>

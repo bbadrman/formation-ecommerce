@@ -5,6 +5,7 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "sensio/framework-extra-bundle": "^6.2",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "5.1.*",
         "symfony/dotenv": "5.1.*",
@@ -61,5 +62,8 @@
             "allow-contrib": false,
             "require": "5.1.*"
         }
+    },
+    "require-dev": {
+        "symfony/debug-bundle": "5.1.*"
     }
 }
