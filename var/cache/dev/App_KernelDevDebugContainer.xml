@@ -84,6 +84,7 @@
     </service>
     <service id="App\Controller\HelloController" class="App\Controller\HelloController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
+      <argument type="service" id="logger"/>
     </service>
     <service id="App\Controller\TestController" class="App\Controller\TestController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
