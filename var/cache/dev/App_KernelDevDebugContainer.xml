@@ -90,6 +90,7 @@
     </service>
     <service id="App\Taxes\Calculator" class="App\Taxes\Calculator" autowire="true" autoconfigure="true">
       <argument type="service" id="logger"/>
+      <argument>20</argument>
     </service>
     <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver" public="false">
       <tag name="monolog.logger" channel="request"/>
