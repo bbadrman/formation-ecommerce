@@ -3,24 +3,16 @@
 /.vscode/
 
 # Ignore the database files
-/db/
-
+/db
+/var
+/vendor
+/local
+/node_modules
+/public/build
 
 # Ignore .env files as they are personal
 /.env.test
-
-
-
-# Ignore the local configuration
-/local/
-
-###> lexik/jwt-authentication-bundle ###
-# /config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###
-
 ###> symfony/webpack-encore-bundle ###
-/node_modules/
-/public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
@@ -29,3 +21,6 @@ node_modules
 .bash_history
 .composer/
 .history/
+
+
+
