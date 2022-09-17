@@ -112,7 +112,9 @@
       <argument type="service" id="logger"/>
       <argument>20</argument>
     </service>
-    <service id="App\Taxes\Detector" class="App\Taxes\Detector" autowire="true" autoconfigure="true"/>
+    <service id="App\Taxes\Detector" class="App\Taxes\Detector" autowire="true" autoconfigure="true">
+      <argument>100</argument>
+    </service>
     <service id="Cocur\Slugify\Slugify" class="Cocur\Slugify\Slugify" autowire="true" autoconfigure="true"/>
     <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver" public="false">
       <tag name="monolog.logger" channel="request"/>

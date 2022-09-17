@@ -33,3 +33,7 @@ services:
         $tva: 20
     # pour avoir l'injection indepondance il faut met (Slugify $slugify) sur la fonction
     Cocur\Slugify\Slugify: ~
+
+    App\Taxes\Detector:
+      arguments:
+        $seuil: 100
