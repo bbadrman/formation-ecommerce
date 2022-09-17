@@ -25,7 +25,14 @@ class HelloController{
 
     public function hello($nom= 'world', Environment $twig) {
 
-        $html = $twig->render('hello.html.twig', ['nom' => $nom]);
+        $html = $twig->render('hello.html.twig', [
+            'nom' => $nom,
+            'age' => 39,
+            'pernoms' => 
+                        ["badr",
+                        "adil", 
+                        "yassine"]
+    ]);
         return new Response($html); 
 
     }
