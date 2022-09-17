@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Taxes\Calculator;
+use Cocur\Slugify\Slugify;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +23,16 @@ class HelloController{
      * @Route("/hello/{nom}", name="hello")
      */
 
-    public function hello($nom= 'world', LoggerInterface $logger, Calculator $calculor ) {
+    public function hello($nom= 'world', LoggerInterface $logger, Calculator $calculor, Slugify $slugify) {
+
+        // $slugify = new Slugify();
+        dump($slugify->slugify("hello words"));
 
         $logger->error("Mon message error ");
+
         $tva = $calculor->calcul(100);
         dump($tva);
+
         return new Response("Hello $nom !"); 
 
     }
