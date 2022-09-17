@@ -23,23 +23,11 @@ class HelloController{
      * @Route("/hello/{nom}", name="hello")
      */
 
-    public function hello($nom= 'world', LoggerInterface $logger, Calculator $calculor, Slugify $slugify, Environment $twig, Detector $detector) {
+    public function hello($nom= 'world', Environment $twig) {
 
-        dump($detector->detect(102));
-        dump($detector->detect(80));
-
-     
-        dump($twig);
-        // $slugify = new Slugify();
-        dump($slugify->slugify("hello words"));
-
-        $logger->error("Mon message error ");
-
-        $tva = $calculor->calcul(100);
-        dump($tva);
-
-        return new Response("Hello $nom !"); 
+        $html = $twig->render('hello.html.twig', ['nom' => $nom]);
+        return new Response($html); 
 
     }
 
-}
+} 
