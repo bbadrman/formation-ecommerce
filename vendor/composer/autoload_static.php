@@ -20,6 +20,7 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
     public static $prefixLengthsPsr4 = array (
         'T' => 
         array (
+            'Twig\\Extra\\TwigExtraBundle\\' => 27,
             'Twig\\' => 5,
         ),
         'S' => 
@@ -51,6 +52,7 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Config\\' => 25,
             'Symfony\\Component\\Cache\\' => 24,
+            'Symfony\\Bundle\\TwigBundle\\' => 26,
             'Symfony\\Bundle\\FrameworkBundle\\' => 31,
             'Symfony\\Bundle\\DebugBundle\\' => 27,
             'Symfony\\Bridge\\Twig\\' => 20,
@@ -80,6 +82,10 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twig\\Extra\\TwigExtraBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extra-bundle',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -191,6 +197,10 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         'Symfony\\Component\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
+        ),
+        'Symfony\\Bundle\\TwigBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/twig-bundle',
         ),
         'Symfony\\Bundle\\FrameworkBundle\\' => 
         array (
@@ -488,6 +498,17 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         'Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait' => __DIR__ . '/..' . '/symfony/framework-bundle/Test/WebTestAssertionsTrait.php',
         'Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase' => __DIR__ . '/..' . '/symfony/framework-bundle/Test/WebTestCase.php',
         'Symfony\\Bundle\\FrameworkBundle\\Translation\\Translator' => __DIR__ . '/..' . '/symfony/framework-bundle/Translation/Translator.php',
+        'Symfony\\Bundle\\TwigBundle\\CacheWarmer\\TemplateCacheWarmer' => __DIR__ . '/..' . '/symfony/twig-bundle/CacheWarmer/TemplateCacheWarmer.php',
+        'Symfony\\Bundle\\TwigBundle\\Command\\LintCommand' => __DIR__ . '/..' . '/symfony/twig-bundle/Command/LintCommand.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Compiler\\ExtensionPass' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Compiler/ExtensionPass.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Compiler\\RuntimeLoaderPass' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Compiler/RuntimeLoaderPass.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Compiler\\TwigEnvironmentPass' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Compiler/TwigEnvironmentPass.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Compiler\\TwigLoaderPass' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Compiler/TwigLoaderPass.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Configuration' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Configuration.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\Configurator\\EnvironmentConfigurator' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/Configurator/EnvironmentConfigurator.php',
+        'Symfony\\Bundle\\TwigBundle\\DependencyInjection\\TwigExtension' => __DIR__ . '/..' . '/symfony/twig-bundle/DependencyInjection/TwigExtension.php',
+        'Symfony\\Bundle\\TwigBundle\\TemplateIterator' => __DIR__ . '/..' . '/symfony/twig-bundle/TemplateIterator.php',
+        'Symfony\\Bundle\\TwigBundle\\TwigBundle' => __DIR__ . '/..' . '/symfony/twig-bundle/TwigBundle.php',
         'Symfony\\Component\\Cache\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/symfony/cache/Adapter/AbstractAdapter.php',
         'Symfony\\Component\\Cache\\Adapter\\AbstractTagAwareAdapter' => __DIR__ . '/..' . '/symfony/cache/Adapter/AbstractTagAwareAdapter.php',
         'Symfony\\Component\\Cache\\Adapter\\AdapterInterface' => __DIR__ . '/..' . '/symfony/cache/Adapter/AdapterInterface.php',
@@ -1401,6 +1422,13 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         'Twig\\Extension\\SandboxExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/SandboxExtension.php',
         'Twig\\Extension\\StagingExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StagingExtension.php',
         'Twig\\Extension\\StringLoaderExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StringLoaderExtension.php',
+        'Twig\\Extra\\TwigExtraBundle\\DependencyInjection\\Compiler\\MissingExtensionSuggestorPass' => __DIR__ . '/..' . '/twig/extra-bundle/DependencyInjection/Compiler/MissingExtensionSuggestorPass.php',
+        'Twig\\Extra\\TwigExtraBundle\\DependencyInjection\\Configuration' => __DIR__ . '/..' . '/twig/extra-bundle/DependencyInjection/Configuration.php',
+        'Twig\\Extra\\TwigExtraBundle\\DependencyInjection\\TwigExtraExtension' => __DIR__ . '/..' . '/twig/extra-bundle/DependencyInjection/TwigExtraExtension.php',
+        'Twig\\Extra\\TwigExtraBundle\\Extensions' => __DIR__ . '/..' . '/twig/extra-bundle/Extensions.php',
+        'Twig\\Extra\\TwigExtraBundle\\LeagueCommonMarkConverterFactory' => __DIR__ . '/..' . '/twig/extra-bundle/LeagueCommonMarkConverterFactory.php',
+        'Twig\\Extra\\TwigExtraBundle\\MissingExtensionSuggestor' => __DIR__ . '/..' . '/twig/extra-bundle/MissingExtensionSuggestor.php',
+        'Twig\\Extra\\TwigExtraBundle\\TwigExtraBundle' => __DIR__ . '/..' . '/twig/extra-bundle/TwigExtraBundle.php',
         'Twig\\FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/src/FileExtensionEscapingStrategy.php',
         'Twig\\Lexer' => __DIR__ . '/..' . '/twig/twig/src/Lexer.php',
         'Twig\\Loader\\ArrayLoader' => __DIR__ . '/..' . '/twig/twig/src/Loader/ArrayLoader.php',

@@ -8,8 +8,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
+use Twig\Environment;
 
 class HelloController{
  
@@ -23,8 +22,9 @@ class HelloController{
      * @Route("/hello/{nom}", name="hello")
      */
 
-    public function hello($nom= 'world', LoggerInterface $logger, Calculator $calculor, Slugify $slugify) {
+    public function hello($nom= 'world', LoggerInterface $logger, Calculator $calculor, Slugify $slugify, Environment $twig) {
 
+        dump($twig);
         // $slugify = new Slugify();
         dump($slugify->slugify("hello words"));
 
