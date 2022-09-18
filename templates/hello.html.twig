@@ -9,15 +9,11 @@
 	<body>
 		<h1>Hello
 			{{nom}}</h1>
-
-		<ul>
-			{% for age in ages %}
-				{% if age >= 18 %}
-					<li>Vous étes un adulte</li>
-				{% else %}
-					<li>Enfant</li>
-				{% endif %}
-			{% endfor %}
-		</ul>
+		<p>Mon formateur s'appelle
+			{{ formateur.prenom}}
+			{{formateur.nom}}
+			et il a
+			{{formateur.age }}
+			ans !</p>
 	</body>
 </html>

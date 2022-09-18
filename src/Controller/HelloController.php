@@ -27,10 +27,11 @@ class HelloController{
 
         $html = $twig->render('hello.html.twig', [
             'nom' => $nom,
-            'ages' => [39,
-                     12,
-                     20,
-                     60,]
+            'formateur' => [
+                'prenom' => 'badr',
+                'nom' => 'bechtioui',
+                'age' => 39,
+            ]
            
     ]);
         return new Response($html); 
