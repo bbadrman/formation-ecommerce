@@ -11,28 +11,44 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
-class HelloController{
- 
-    // protected $logger;
-     
-    // public function __construct(LoggerInterface $logger) {
-    //     $this->logger = $logger;
-    // }
+class HelloController
+{
+
+    protected $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
 
     /**
      * @Route("/hello/{nom}", name="hello")
      */
 
-    public function hello($nom= 'world', Environment $twig) {
+    public function hello($nom = 'world')
+    {
 
-        $html = $twig->render('hello.html.twig', [
-            'nom' => $nom, 
+        return $this->render('hello.html.twig', [
+            'nom' => $nom,
             'formateur1' => ['prenom' => 'badr', 'nom' => 'bechtioui'],
             'formateur2' => ['prenom' => 'yassine', 'nom' => 'charafi'],
-           
-    ]);
-        return new Response($html); 
 
+        ]);
     }
 
-} 
+    /**
+     * @Route("/example", name="example")
+     */
+    public function example()
+    {
+        return $this->render('example.html.twig', [
+            'age' => 33
+        ]);
+    }
+
+    protected function render(string $path, array $variables = [])
+    {
+        $html = $this->twig->render($path, $variables);
+        return new Response($html);
+    }
+}

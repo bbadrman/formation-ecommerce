@@ -104,6 +104,7 @@
     </service>
     <service id="App\Controller\HelloController" class="App\Controller\HelloController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
+      <argument type="service" id="twig"/>
     </service>
     <service id="App\Controller\TestController" class="App\Controller\TestController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -144,7 +145,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
       <tag name="controller.argument_value_resolver" priority="-50"/>
-      <argument type="service" id=".service_locator.PbIjTk."/>
+      <argument type="service" id=".service_locator.r02hm8B"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false">
       <tag name="controller.argument_value_resolver" priority="-100"/>
@@ -1622,22 +1623,15 @@
         <argument key="loader" type="service" id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.ypVMWxF" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="twig" type="service" id="twig"/>
-      </argument>
-    </service>
     <service id=".service_locator.s__uGTB" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="calculator" type="service" id="App\Taxes\Calculator"/>
       </argument>
     </service>
-    <service id=".service_locator.PbIjTk." class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.r02hm8B" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Controller\HelloController::hello" type="service" id=".service_locator.ypVMWxF"/>
         <argument key="App\Controller\TestController::test" type="service" id=".service_locator.s__uGTB"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
@@ -1645,7 +1639,6 @@
         <argument key="kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
-        <argument key="App\Controller\HelloController:hello" type="service" id=".service_locator.ypVMWxF"/>
         <argument key="App\Controller\TestController:test" type="service" id=".service_locator.s__uGTB"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel:registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
@@ -1861,7 +1854,7 @@
     <service id="Twig\Environment" alias="twig" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.PbIjTk."/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.r02hm8B"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
     <service id="var_dumper.cli_dumper" alias="var_dumper.contextualized_cli_dumper" public="false"/>
