@@ -2,24 +2,13 @@
 
 namespace App\Controller;
 
-use App\Taxes\Calculator;
-use App\Taxes\Detector;
-use Cocur\Slugify\Slugify;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HelloController
+class HelloController extends AbstractController
 {
 
-    protected $twig;
 
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
-    }
 
     /**
      * @Route("/hello/{nom}", name="hello")
@@ -46,9 +35,5 @@ class HelloController
         ]);
     }
 
-    protected function render(string $path, array $variables = [])
-    {
-        $html = $this->twig->render($path, $variables);
-        return new Response($html);
-    }
+   
 }
