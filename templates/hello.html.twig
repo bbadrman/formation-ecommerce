@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-	</head>
-	<body>
-		<h1>Hello
-			{{nom}}</h1>
+{% extends "base.html.twig" %}
+{% block body %}
+	<h1>Hello
+		{{nom}}</h1>
 
-		<ul>
-			{% for age in ages %}
-				{% if age >= 18 %}
-					<li>Vous étes un adulte</li>
-				{% else %}
-					<li>Enfant</li>
-				{% endif %}
-			{% endfor %}
-		</ul>
-	</body>
-</html>
+		<h2>Nos formateurs</h2>
+        {% set formateur = formateur1 %}
+		{% include "_formateur.html.twig" %}
+		{% set formateur = formateur2 %}
+        {% include "_formateur.html.twig" with {"formateur": formateur2} %}
+
+		
+
+{% endblock %}
+{% block title %}
+	Hello
+	{{ nom }}
+{% endblock %}
