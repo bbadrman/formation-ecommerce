@@ -2,33 +2,47 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 
-class HomeController extends AbstractController 
+class HomeController extends AbstractController
 
 {
 
     /**
      * @Route("/", name="home")
      */
-    public function home(ProductRepository $productRepository){
+    public function home(EntityManagerInterface $em)
+    {
+       //  pour créer un product 
+        $product = new Product();
+        $product 
+               ->setName('Table en cuivre')
+               ->setPrice(3000)
+               ->setSlug('table-en-cuivre');
 
-        // count([]) 
-        // find(id)  recherche avec id
-        // findBy([], [])  recherche un seul produit
-        // findOneBy([], []) recherche avec cretaires mais un seul produit
-        // findAll()   recherche toute les produits
+        $em->persist($product);
+        $em->flush();
 
-        $product = $productRepository->find(1);
+        // Pour modify un produit
 
-        // dump($product->getMajName());
+        // $productRepository = $em->getRepository(Product::class);
+        // $product = $productRepository->find(5);
+        // $product->setPrice(3500);
+        // $em->flush();
+
+        // Pour supprimer un product
+        // $productRepository = $em->getRepository(Product::class);
+        // $product = $productRepository->find(5);
+        // $em->remove($product);
+        // $em->flush();
+
 
         return $this->render('home.html.twig');
-
-        
     }
 }
