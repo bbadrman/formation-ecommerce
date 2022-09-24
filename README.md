@@ -36,3 +36,14 @@ In docker >> docker-compose.yml find replace test by project name and change all
 ## Main Tasks
 
 To do ...
+
+
+### Install maker
+ in du branch i have i big problem with installing the bundel maker 
+
+  Problem 1
+    - symfony/maker-bundle v1.43.0 requires symfony/config ^5.4.7|^6.0 -> found symfony/config[v5.4.7, v5.4.8, v5.4.9, v5.4.11, v6.0.0, ..., v6.1.3] but these were not loaded, likely because it conflicts with another require.
+    - symfony/maker-bundle[v1.44.0, ..., v1.46.0] require php >=8.0 -> your php version (7.4.30) does not satisfy that requirement.
+    - Root composer.json requires symfony/maker-bundle ^1.43 -> satisfiable by symfony/maker-bundle[v1.43.0, v1.44.0, v1.45.0, v1.46.0].
+ I resouled the probleme with presing le version the bundel :
+     `composer require --dev symfony/maker-bundle:1.39.0`
