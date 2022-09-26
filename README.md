@@ -47,3 +47,7 @@ To do ...
     - Root composer.json requires symfony/maker-bundle ^1.43 -> satisfiable by symfony/maker-bundle[v1.43.0, v1.44.0, v1.45.0, v1.46.0].
  I resouled the probleme with presing le version the bundel :
      `composer require --dev symfony/maker-bundle:1.39.0`
+
+composer require debug   
+
+ pour presenter la bare du debugaje au desu 
