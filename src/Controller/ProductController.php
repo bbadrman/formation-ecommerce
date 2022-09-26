@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/{slug}", name="product_category")
+     * @Route("/category/{slug}", name="product_category")
      */
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
