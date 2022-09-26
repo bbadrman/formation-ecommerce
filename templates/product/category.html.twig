@@ -6,6 +6,12 @@
 {% endblock %}
 
 {% block body %}
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+  <li class="breadcrumb-item active"> {{ category.name }}</li>
+</ol>
+
 	<h1>Catégorie :
 		{{ category.name }}</h1>
 	<div class="row">
