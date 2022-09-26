@@ -37,8 +37,11 @@ return [
                     .')'
                 .')'
                 .'|/hello(?:/([^/]++))?(*:189)'
-                .'|/([^/]++)(*:206)'
-                .'|/test(?:/(\\d+))?(*:230)'
+                .'|/([^/]++)(?'
+                    .'|(*:209)'
+                    .'|/([^/]++)(*:226)'
+                .')'
+                .'|/test(?:/(\\d+))?(*:251)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -50,8 +53,9 @@ return [
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
         189 => [[['_route' => 'hello', 'nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], ['nom'], null, null, false, true, null]],
-        206 => [[['_route' => 'product_category', '_controller' => 'App\\Controller\\ProductController::category'], ['slug'], null, null, false, true, null]],
-        230 => [
+        209 => [[['_route' => 'product_category', '_controller' => 'App\\Controller\\ProductController::category'], ['slug'], null, null, false, true, null]],
+        226 => [[['_route' => 'product_show', '_controller' => 'App\\Controller\\ProductController::show'], ['category_slug', 'slug'], null, null, false, true, null]],
+        251 => [
             [['_route' => 'test', 'age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age'], ['GET' => 0, 'POST' => 1], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
