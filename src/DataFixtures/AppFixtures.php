@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create("fr_FR");
         $faker->addProvider(new \Liior\Faker\Prices($faker));
         $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
+        $faker->addProvider(new \Bluemmb\Faker\PicsumPhotosProvider($faker));
 
         for ($c = 0; $c < 3; $c++) {
             $category = new Category();
@@ -35,7 +36,9 @@ class AppFixtures extends Fixture
                 $product->setName($faker->productName)
                     ->setPrice($faker->price(4000, 20000))
                     ->setslug(strtolower($this->slugger->slug($product->getName())))
-                    ->setCategory($category);
+                    ->setCategory($category)
+                    ->setShortDescription($faker->paragraph())
+                    ->setMainPicture($faker->imageUrl(400, 400, true));
                     
                 $manager->persist($product);
             }
