@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+	Pgae de
+	{{product.name}}
+
+{% endblock %}
+
+{% block body %}
+
+	<h1>
+		{{product.name}}
+		({{product.price /100 }}
+		Dhs)
+	</h1>
+	<div class="row">
+		<div class="col-4">
+			<img class="img-fluid" src="{{product.mainPicture}}" alt="Image de {{ product.name }}">
+		</div>
+		<div class="col">
+        <span class="btn btn-primary">
+        {{ product.category.name }}
+        </span>
+			<p>
+				{{product.shortDescription}}
+			</p>
+			<a href="" class="btn btn-success btn-lg">
+				<i class="fas fas-shopping-cart"></i>
+				Ajouter au panier
+			</a>
+		</div>
+	</div>
+
+{% endblock %}
