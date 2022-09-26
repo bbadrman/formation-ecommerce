@@ -3,9 +3,10 @@
 /.vscode/
 
 # Ignore the database files
-/db
-/var
-/vendor
+/db/
+/public/bundles/
+/var/
+/vendor/
 /local
 /node_modules
 /public/build

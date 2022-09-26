@@ -17,32 +17,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(EntityManagerInterface $em)
+    public function home(ProductRepository $productRepository)
     {
-       //  pour créer un product 
-        $product = new Product();
-        $product 
-               ->setName('Table en cuivre')
-               ->setPrice(3000)
-               ->setSlug('table-en-cuivre');
+       $products = $productRepository->findBy([], [], 3);
 
-        $em->persist($product);
-        $em->flush();
-
-        // Pour modify un produit
-
-        // $productRepository = $em->getRepository(Product::class);
-        // $product = $productRepository->find(5);
-        // $product->setPrice(3500);
-        // $em->flush();
-
-        // Pour supprimer un product
-        // $productRepository = $em->getRepository(Product::class);
-        // $product = $productRepository->find(5);
-        // $em->remove($product);
-        // $em->flush();
-
-
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', [
+            "products" => $products,
+        ]);
     }
 }
