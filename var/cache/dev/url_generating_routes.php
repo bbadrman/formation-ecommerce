@@ -18,6 +18,7 @@ return [
     'hello' => [['nom'], ['nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], [], [['variable', '/', '[^/]++', 'nom', true], ['text', '/hello']], [], []],
     'example' => [[], ['_controller' => 'App\\Controller\\HelloController::example'], [], [['text', '/example']], [], []],
     'home' => [[], ['_controller' => 'App\\Controller\\HomeController::home'], [], [['text', '/']], [], []],
+    'product_category' => [['slug'], ['_controller' => 'App\\Controller\\ProductController::category'], [], [['variable', '/', '[^/]++', 'slug', true]], [], []],
     'test' => [['age'], ['age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age' => '\\d+'], [['variable', '/', '\\d+', 'age', true], ['text', '/test']], [], []],
     'index' => [[], ['_controller' => 'App\\Controller\\TestController::index'], [], [['text', '/']], [], []],
 ];
