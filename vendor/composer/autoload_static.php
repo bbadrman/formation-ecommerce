@@ -108,6 +108,7 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         ),
         'B' => 
         array (
+            'Bluemmb\\Faker\\' => 14,
             'Bezhanov\\Faker\\' => 15,
         ),
         'A' => 
@@ -384,6 +385,10 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         array (
             0 => __DIR__ . '/..' . '/cocur/slugify/src',
         ),
+        'Bluemmb\\Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bluemmb/faker-picsum-photos-provider',
+        ),
         'Bezhanov\\Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/mbezhanov/faker-provider-collection/src/Faker',
@@ -424,6 +429,10 @@ class ComposerStaticInitfa2fbf91963ab97b7f5182f3698e6ad3
         'Bezhanov\\Faker\\Provider\\Space' => __DIR__ . '/..' . '/mbezhanov/faker-provider-collection/src/Faker/Provider/Space.php',
         'Bezhanov\\Faker\\Provider\\Species' => __DIR__ . '/..' . '/mbezhanov/faker-provider-collection/src/Faker/Provider/Species.php',
         'Bezhanov\\Faker\\Provider\\Team' => __DIR__ . '/..' . '/mbezhanov/faker-provider-collection/src/Faker/Provider/Team.php',
+        'Bluemmb\\Faker\\PicsumPhotosProvider' => __DIR__ . '/..' . '/bluemmb/faker-picsum-photos-provider/PicsumPhotosProvider.php',
+        'Bluemmb\\Faker\\Tests\\ImageUrlTest' => __DIR__ . '/..' . '/bluemmb/faker-picsum-photos-provider/Tests/ImageUrlTest.php',
+        'Bluemmb\\Faker\\Tests\\SpecificAsIdTest' => __DIR__ . '/..' . '/bluemmb/faker-picsum-photos-provider/Tests/SpecificAsIdTest.php',
+        'Bluemmb\\Faker\\Tests\\SpecificAsSeedTest' => __DIR__ . '/..' . '/bluemmb/faker-picsum-photos-provider/Tests/SpecificAsSeedTest.php',
         'Cocur\\Slugify\\Bridge\\Laravel\\SlugifyFacade' => __DIR__ . '/..' . '/cocur/slugify/src/Bridge/Laravel/SlugifyFacade.php',
         'Cocur\\Slugify\\Bridge\\Laravel\\SlugifyServiceProvider' => __DIR__ . '/..' . '/cocur/slugify/src/Bridge/Laravel/SlugifyServiceProvider.php',
         'Cocur\\Slugify\\Bridge\\Latte\\SlugifyHelper' => __DIR__ . '/..' . '/cocur/slugify/src/Bridge/Latte/SlugifyHelper.php',

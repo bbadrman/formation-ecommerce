@@ -72,6 +72,7 @@ return array(
     'Doctrine\\Bundle\\FixturesBundle\\' => array($vendorDir . '/doctrine/doctrine-fixtures-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
     'Cocur\\Slugify\\' => array($vendorDir . '/cocur/slugify/src'),
+    'Bluemmb\\Faker\\' => array($vendorDir . '/bluemmb/faker-picsum-photos-provider'),
     'Bezhanov\\Faker\\' => array($vendorDir . '/mbezhanov/faker-provider-collection/src/Faker'),
     'App\\Tests\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
