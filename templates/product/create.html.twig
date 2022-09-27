@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% form_theme formView _self %}
+
 {% block title %}
 
 	créer un produit
@@ -34,5 +36,15 @@
 	</button>
 	{{ form_end(formView)}}
 
+
+{% endblock %}
+{% block form_row %}
+
+	<div class="form-group">
+		{{ form_label(form)}}
+		{{ form_widget(form, {'attr': {'class': 'form-control' } } )}}
+		{{ form_help(form)}}
+		{{ form_errors(form)}}
+	</div>
 
 {% endblock %}
