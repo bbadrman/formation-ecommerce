@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -52,7 +54,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/products/create", name="products_create")
      */
-    public function create(FormFactoryInterface $factory, CategoryRepository $categoryRepository){
+    public function create(FormFactoryInterface $factory){
 
         $builder = $factory->createBuilder();
         $builder->add('name', TextType::class, [
@@ -75,20 +77,18 @@ class ProductController extends AbstractController
                         'class' => 'form-control',
                         'placeholder' => 'Tapez le prix en Dhs',
                     ] 
-                    ]);
-                    
-                $options =[];
-                foreach( $categoryRepository->findAll() as $category ){
-                    $options[$category->getName()] = $category->getId();
-                }
-                $builder->add('category', ChoiceType::class, [
+                    ])
+                ->add('category', EntityType::class, [
                     'label' => 'Catégorie',
                     'attr' => [
                         'class' => 'form-control'],
                         'placeholder' => '-- choisir une catégorie --',
-                        'choices' => $options
+                        'class' => Category::class,
+                        'choice_label' => function(Category $category) {
+                            return strtoupper($category->getName());
+                        }
                     
-                ]) ;
+                ]);
 
         $form = $builder->getForm();
         $formView = $form->createView();
