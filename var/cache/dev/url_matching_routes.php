@@ -18,6 +18,7 @@ return [
             [['_route' => 'home', '_controller' => 'App\\Controller\\HomeController::home'], null, null, null, false, false, null],
             [['_route' => 'index', '_controller' => 'App\\Controller\\TestController::index'], null, null, null, false, false, null],
         ],
+        '/admin/products/create' => [[['_route' => 'products_create', '_controller' => 'App\\Controller\\ProductController::create'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
