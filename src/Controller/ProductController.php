@@ -62,7 +62,22 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted()) {
            $em->flush();
-        }
+
+        //    $url = $urlGenerator->generate('product_show',[
+        //        'category_show' => $product->getCategory()->getSlug(),
+        //        'slug' => $product->getSlug()
+        //    ]);
+        //    $response = new RedirectResponse($url);
+        //    return $response;
+
+        //    alors en replace tous ca par raccorce dans abstracte par :
+        // 
+
+        return $this->redirectToRoute('product_show',[
+               'category_slug' => $product->getCategory()->getSlug(),
+               'slug' => $product->getSlug()
+        ]);
+    }
 
          $formView = $form->createView();
 
@@ -73,7 +88,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/admin/products/create", name="products_create")
+     * @Route("/admin/product/create", name="products_create")
      */
     public function create(Request $request, SluggerInterface $slluger, EntityManagerInterface $em) {
 
@@ -93,7 +108,10 @@ class ProductController extends AbstractController
             $em->persist($product);
             $em->flush();
 
-            dd($product);
+            return $this->redirectToRoute('product_show',[
+                'category_slug' => $product->getCategory()->getSlug(),
+                'slug' => $product->getSlug()
+         ]);
 
 
         }
