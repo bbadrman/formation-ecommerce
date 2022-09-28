@@ -53,14 +53,14 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/products/create", name="products_create")
      */
-    public function create(FormFactoryInterface $factory, Request $request, SluggerInterface $slluger, EntityManagerInterface $em) {
+    public function create(Request $request, SluggerInterface $slluger, EntityManagerInterface $em) {
 
         // dump($request);
 
-        $builder = $factory->createBuilder(ProductType::class);
+        $form = $this->createForm(ProductType::class);
         
         
-        $form = $builder->getForm();
+        // $form = $builder->getForm();
 
         $form->handleRequest($request);
         
@@ -69,13 +69,6 @@ class ProductController extends AbstractController
             $product->setSlug(strtolower($slluger->slug($product->getName())));
             $em->persist($product);
             $em->flush();
-
-
-            // $product = new Product();
-            // $product->setName($data['name'])
-            //         ->setShortDescription($data['shortDescription'])
-            //         ->setPrice($data['price'])
-            //         ->setCategory($data['category']);
 
             dd($product);
 
