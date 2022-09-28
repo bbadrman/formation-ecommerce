@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,16 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends AbstractController
 {
@@ -64,46 +57,9 @@ class ProductController extends AbstractController
 
         // dump($request);
 
-        $builder = $factory->createBuilder(FormType::class, null, [
-            'data_class' => Product::class
-        ]);
-        $builder->add('name', TextType::class, [
-            'label' => 'Nom du produit',
-            'attr' => [
-                
-                'placeholder' => 'Tapez le Nom du produit',
-            ] 
-        ])
-                ->add('shortDescription', TextareaType::class, [
-                    'label' => 'Description courte',
-                    'attr' => [
-                      
-                        'placeholder' => 'Tapez une description assez courte mais parlante pour le visiteur',
-                    ] 
-                ]) 
-                ->add('price', MoneyType::class, [
-                    'label' => 'Prix du product',
-                    'attr' => [
-                       
-                        'placeholder' => 'Tapez le prix en Dhs',
-                    ] 
-                    ])
-                ->add('mainPicture', UrlType::class, [
-                    'label' => 'Main picture',
-                    'attr' => [
-                    'placeholder' => 'Taper une url d\'image !']
-                ])
-                ->add('category', EntityType::class, [
-                    'label' => 'Catégorie',
-                     
-                        'placeholder' => '-- choisir une catégorie --',
-                        'class' => Category::class,
-                        'choice_label' => function(Category $category) {
-                            return strtoupper($category->getName());
-                        }
-                    
-                ]);
-
+        $builder = $factory->createBuilder(ProductType::class);
+        
+        
         $form = $builder->getForm();
 
         $form->handleRequest($request);
