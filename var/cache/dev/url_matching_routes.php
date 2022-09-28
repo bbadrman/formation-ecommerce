@@ -42,7 +42,8 @@ return [
                     .'|(*:209)'
                     .'|/([^/]++)(*:226)'
                 .')'
-                .'|/test(?:/(\\d+))?(*:251)'
+                .'|/admin/product/([^/]++)/edit(*:263)'
+                .'|/test(?:/(\\d+))?(*:287)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -56,7 +57,8 @@ return [
         189 => [[['_route' => 'hello', 'nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], ['nom'], null, null, false, true, null]],
         209 => [[['_route' => 'product_category', '_controller' => 'App\\Controller\\ProductController::category'], ['slug'], null, null, false, true, null]],
         226 => [[['_route' => 'product_show', '_controller' => 'App\\Controller\\ProductController::show'], ['category_slug', 'slug'], null, null, false, true, null]],
-        251 => [
+        263 => [[['_route' => 'product_edit', '_controller' => 'App\\Controller\\ProductController::edit'], ['id'], null, null, false, false, null]],
+        287 => [
             [['_route' => 'test', 'age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age'], ['GET' => 0, 'POST' => 1], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
