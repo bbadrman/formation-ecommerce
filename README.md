@@ -60,3 +60,7 @@ composer require debug
     il faut ajouter sur twig.yaml
          form_themes:
       - bootstrap_4_layout.html.twig 
+
+  ### pour persiste dans la db  il faut d'abord inject EntityManagerInterface $em
+      apres en $em->persiste();  //preparation du données selemeent en premiere creation   pas en modife et remove
+            et  $em->flush();
