@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% form_theme formView _self %}
+{# {% form_theme formView "bootstrap_4_layout.html.twig" %} #}
 
 {% block title %}
 
@@ -38,13 +38,4 @@
 
 
 {% endblock %}
-{% block form_row %}
-
-	<div class="form-group">
-		{{ form_label(form)}}
-		{{ form_widget(form, {'attr': {'class': 'form-control' } } )}}
-		{{ form_help(form)}}
-		{{ form_errors(form)}}
-	</div>
-
-{% endblock %}
+ 
