@@ -54,3 +54,9 @@ composer require debug
 
  composer require form 
  pour install liberaire form
+
+ ### 10-Twig Les thèmes de formulaires livrés avec Symfony
+
+    il faut ajouter sur twig.yaml
+         form_themes:
+      - bootstrap_4_layout.html.twig 
