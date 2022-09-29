@@ -327,6 +327,7 @@
     <service id="App\Form\ProductType" class="App\Form\ProductType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\Type\PriceType" class="App\Form\Type\PriceType" autowire="true" autoconfigure="true"/>
     <service id="App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
