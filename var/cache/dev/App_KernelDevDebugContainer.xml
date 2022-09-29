@@ -323,6 +323,7 @@
     <service id="App\Form\CategoryType" class="App\Form\CategoryType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\DataTransfomer\CentimesTransformer" class="App\Form\DataTransfomer\CentimesTransformer" autowire="true" autoconfigure="true"/>
     <service id="App\Form\ProductType" class="App\Form\ProductType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
