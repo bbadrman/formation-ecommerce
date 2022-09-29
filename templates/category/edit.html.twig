@@ -2,12 +2,34 @@
 
 {% block title %}
 
-Modifie categorie {{ category.name }}
-    
+	Modifie categorie
+	{{ category.name }}
+
 {% endblock %}
 
 {% block body %}
 
-Modifie categorie {{ category.slug }}
-    
+	Modifie categorie
+	{{ category.slug }}
+
+	{{ form_start(formCat)}}
+	{{ form_errors(formCat)}}
+	{# {{ form_widget(formView)}} #}
+
+	<div class="row">
+		<div class="col">
+			{{ form_row(formCat.name)}}
+		</div>
+
+
+	</div>
+
+
+	<button type='submit' class="btn btn-primary">
+		<i class="fas fa-save"></i>
+		Modifie la Categorie
+	</button>
+	{{ form_end(formCat)}}
+
+
 {% endblock %}
