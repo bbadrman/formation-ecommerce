@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Fom\Type\PriceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
