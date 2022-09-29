@@ -53,7 +53,7 @@ class ProductController extends AbstractController
     /**
      *@Route("/admin/product/{id}/edit", name="product_edit")
      */
-    public function edit($id, ProductRepository $productRepository,SluggerInterface $slluger, Request $request, EntityManagerInterface $em){
+    public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em){
          $product = $productRepository->find($id);
 
          $form = $this->createForm(ProductType::class, $product);
@@ -62,7 +62,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted()) {
            $product->setSlug(strtolower($slluger->slug($product->getName())));
-           $em->flush();
+           $em->flush($product);
 
         //    $url = $urlGenerator->generate('product_show',[
         //        'category_show' => $product->getCategory()->getSlug(),
