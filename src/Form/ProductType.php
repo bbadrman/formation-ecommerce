@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Product;
 use App\Entity\Category;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -53,7 +55,29 @@ class ProductType extends AbstractType
                             return strtoupper($category->getName());
                         }
                     
-                ]);
+                    ])
+                ;
+
+         $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $form = $event->getForm();
+
+            /** @var Product */
+
+            $product = $event->getData();
+
+            // if ($product->getId() === null) {
+            //     $form->add('category', EntityType::class, [
+            //         'label' => 'Catégorie',
+                     
+            //             'placeholder' => '-- choisir une catégorie --',
+            //             'class' => Category::class,
+            //             'choice_label' => function(Category $category) {
+            //                 return strtoupper($category->getName());
+            //             }
+                    
+            //         ]);
+            // }
+         });
 
     
     }
