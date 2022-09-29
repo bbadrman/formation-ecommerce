@@ -1,9 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!{% endblock %}
+{% block title %}Créer Une Categorie {% endblock %}
 
 {% block body %}
 
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Nouveau Produit</h1>
+	{# {{ form(formView)}} #}
+
+	{{ form_start(formCat)}}
+	{{ form_errors(formCat)}}
+	{# {{ form_widget(formView)}} #}
+
+	<div class="row">
+		<div class="col">
+			{{ form_row(formCat.name)}} 
+		</div>
+
+	</div>
+
+
+	<button type='submit' class="btn btn-primary">
+		<i class="fas fa-save"></i>
+		Créer le Produit
+	</button>
+	{{ form_end(formCat)}}
+
 
 {% endblock %}
