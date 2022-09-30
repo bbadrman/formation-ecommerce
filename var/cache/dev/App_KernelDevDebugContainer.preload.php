@@ -430,9 +430,6 @@ require_once __DIR__.'/twig/f4/f4c569b2832b7e8588bc86b09c5d728b00a36056a7ca52ff5
 $classes = [];
 $classes[] = 'Symfony\\Component\\Validator\\Mapping\\ClassMetadata';
 $classes[] = 'Symfony\\Component\\Form\\Extension\\Validator\\Constraints\\Form';
-$classes[] = 'Symfony\\Component\\Validator\\Mapping\\PropertyMetadata';
-$classes[] = 'Symfony\\Component\\Validator\\Constraints\\NotBlank';
-$classes[] = 'Symfony\\Component\\Validator\\Constraints\\Length';
 $classes[] = 'Symfony\\Component\\Routing\\Generator\\CompiledUrlGenerator';
 $classes[] = 'Symfony\\Bundle\\FrameworkBundle\\Routing\\RedirectableCompiledUrlMatcher';
 $classes[] = 'Symfony\\Component\\Routing\\Annotation\\Route';
