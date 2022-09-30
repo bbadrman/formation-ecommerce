@@ -1133,6 +1133,11 @@
           <argument>/var/www/html/vendor/symfony/form/Resources/config/validation.xml</argument>
         </argument>
       </call>
+      <call method="addYamlMappings">
+        <argument type="collection">
+          <argument>/var/www/html/config/validator/product.yaml</argument>
+        </argument>
+      </call>
       <call method="enableAnnotationMapping">
         <argument type="service" id="annotations.cached_reader"/>
       </call>
