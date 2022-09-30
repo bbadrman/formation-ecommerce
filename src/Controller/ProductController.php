@@ -11,11 +11,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductController extends AbstractController
@@ -59,22 +59,32 @@ class ProductController extends AbstractController
     public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
     {
 
-        $age = 25;
+        $client = [
+            'nom' => 'badr',
+            'prenom' => 'bechtioui',
+            'voiture' => [
+                'marque' => 'Lander',
+                'couleur' => 'Noire',
+            ]
+        ];
 
-        $resultat = $validator->validate($age, [
-            new LessThanOrEqual([
-                'value' => 120,
-                'message' => "l'age doit étre inférieur à {{ compared_value }} mais vous avez donné {{ value }}"
-            ]),
-
-            new GreaterThan([
-                'value' => 0,
-                'message' => "l'age doit étre supérieur à 0"
+        $collection = new Collection([
+            'nom' => new NotBlank(['message' => "Le nom est obligatoire"]),
+            'prenom' => [
+                new NotBlank(['message' => "Le prenom est obligatoire"]),
+                new Length(['min' => 3, 'minMessage' => "Le prénom ne doit pas faire mois de 3 caractaire"])
+            ],
+            'voiture' => new Collection([
+                'marque' => new NotBlank(['message' => "La marque est obligatoire"]),
+                'couleur' => new NotBlank(['message' => "la coleur est obligatoire"]),
             ])
+
         ]);
 
+        $resultat = $validator->validate($client, $collection);
+
         if ($resultat->count() > 0) {
-             dd("il y' a une errour", $resultat);
+            dd("il y' a une errour", $resultat);
         }
         dd("tous vas bien");
 
