@@ -60,8 +60,7 @@ class ProductController extends AbstractController
     {
 
       $product = new Product();
-      $product->setName('salyt')
-              ->setPrice(250);
+      $product->setName('salyt') ;
             
 
       $resultat = $validator->validate($product);
