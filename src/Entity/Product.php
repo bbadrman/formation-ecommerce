@@ -3,9 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ProductRepository;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
@@ -52,11 +50,11 @@ class Product
 
     public static function loadValidatorMetadata(ClassMetadata $metadata){
         $metadata->addPropertyConstraints('name',[
-            new NotBlank(['message' => 'Le nom du produit est obligatoir']),
-            new Length(['min' =>3, 'max' => 255, 'minMessage' => 'Le nom du produit doit contenaire ou mois 3 caractaires '])
+            new Assert\NotBlank(['message' => 'Le nom du produit est obligatoir']),
+            new Assert\Length(['min' =>3, 'max' => 255, 'minMessage' => 'Le nom du produit doit contenaire ou mois 3 caractaires '])
         
         ]); 
-        $metadata->addPropertyConstraint('price', new NotBlank(['message' => 'Le prix du produit est oobligatoir']));
+        $metadata->addPropertyConstraint('price', new Assert\NotBlank(['message' => 'Le prix du produit est oobligatoir']));
 
     }
 
