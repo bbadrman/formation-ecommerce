@@ -14,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductController extends AbstractController
 {
@@ -23,9 +26,9 @@ class ProductController extends AbstractController
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findOneBy(['slug' => $slug]);
-       
-        if (!$category){
-            throw $this->createNotFoundException( "la catégorie demandée n'existe pas "); 
+
+        if (!$category) {
+            throw $this->createNotFoundException("la catégorie demandée n'existe pas ");
         }
         return $this->render('product/category.html.twig', [
             'slug' => $slug,
@@ -41,7 +44,7 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy([
             'slug' => $slug,
         ]);
-        if(!$product){
+        if (!$product) {
             throw $this->createNotFoundException('Product not found');
         }
 
@@ -53,34 +56,55 @@ class ProductController extends AbstractController
     /**
      *@Route("/admin/product/{id}/edit", name="product_edit")
      */
-    public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em){
-         $product = $productRepository->find($id);
+    public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
+    {
 
-         $form = $this->createForm(ProductType::class, $product);
+        $age = 25;
+
+        $resultat = $validator->validate($age, [
+            new LessThanOrEqual([
+                'value' => 120,
+                'message' => "l'age doit étre inférieur à {{ compared_value }} mais vous avez donné {{ value }}"
+            ]),
+
+            new GreaterThan([
+                'value' => 0,
+                'message' => "l'age doit étre supérieur à 0"
+            ])
+        ]);
+
+        if ($resultat->count() > 0) {
+             dd("il y' a une errour", $resultat);
+        }
+        dd("tous vas bien");
+
+        $product = $productRepository->find($id);
+
+        $form = $this->createForm(ProductType::class, $product);
         //  $form->setData($product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-           $product->setSlug(strtolower($slluger->slug($product->getName())));
-           $em->flush($product);
+            $product->setSlug(strtolower($slluger->slug($product->getName())));
+            $em->flush($product);
 
-        //    $url = $urlGenerator->generate('product_show',[
-        //        'category_show' => $product->getCategory()->getSlug(),
-        //        'slug' => $product->getSlug()
-        //    ]);
-        //    $response = new RedirectResponse($url);
-        //    return $response;
+            //    $url = $urlGenerator->generate('product_show',[
+            //        'category_show' => $product->getCategory()->getSlug(),
+            //        'slug' => $product->getSlug()
+            //    ]);
+            //    $response = new RedirectResponse($url);
+            //    return $response;
 
-        //    alors en replace tous ca par raccorce dans abstracte par :
-        // 
+            //    alors en replace tous ca par raccorce dans abstracte par :
+            // 
 
-        return $this->redirectToRoute('product_show',[
-               'category_slug' => $product->getCategory()->getSlug(),
-               'slug' => $product->getSlug()
-        ]);
-    }
+            return $this->redirectToRoute('product_show', [
+                'category_slug' => $product->getCategory()->getSlug(),
+                'slug' => $product->getSlug()
+            ]);
+        }
 
-         $formView = $form->createView();
+        $formView = $form->createView();
 
         return $this->render('product/edit.html.twig', [
             'product' => $product,
@@ -91,37 +115,35 @@ class ProductController extends AbstractController
     /**
      * @Route("/admin/product/create", name="products_create")
      */
-    public function create(Request $request, SluggerInterface $slluger, EntityManagerInterface $em) {
+    public function create(Request $request, SluggerInterface $slluger, EntityManagerInterface $em)
+    {
 
         // dump($request);
 
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
-        
-        
+
+
         // $form = $builder->getForm();
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted()) {
-            
+
             $product->setSlug(strtolower($slluger->slug($product->getName())));
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('product_show',[
+            return $this->redirectToRoute('product_show', [
                 'category_slug' => $product->getCategory()->getSlug(),
                 'slug' => $product->getSlug()
-         ]);
-
-
+            ]);
         }
-       
+
         $formView = $form->createView();
 
         return $this->render('product/create.html.twig', [
             'formView' => $formView,
         ]);
-
     }
 }
