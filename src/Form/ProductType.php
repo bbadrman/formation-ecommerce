@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductType extends AbstractType
 {
@@ -26,8 +27,11 @@ class ProductType extends AbstractType
                 'label' => 'Nom du produit',
                 'attr' => [
 
-                    'placeholder' => 'Tapez le Nom du produit',
-                ]
+                    'placeholder' => 'Tapez le Nom du produit'
+
+                ],
+                'required' => false,
+                // 'constraints' => new NotBlank(['message' => 'ne peut pas etre vide'])
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Description courte',
