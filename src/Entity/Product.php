@@ -19,15 +19,14 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="le nom du produit est obligatoire", groups={"large-name"} )
+     * @Assert\NotBlank(message="le nom du produit est obligatoire")
      * @Assert\Length(min=3, max=255, minMessage="le nom du produit doivent superieur au 3 caractaires")
-     * @Assert\Length(min=10, minMessage="le nom du produit doivent superieur au 10 caractaires", groups={"large-name"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="le prix du produit est obligatoirement", groups={"with-price"})
+     * @Assert\NotBlank(message="le prix du produit est obligatoirement")
      */
     private $price;
 
@@ -43,11 +42,15 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message="le photo principale doit etre une url valide")
+     * @Assert\NotBlank(message="la photo principale est obligatoirement")
      */
     private $mainPicture;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="la discription  du produit est obligatoirement")
+     * @Assert\Length(min=20, max=255, minMessage="la discription du produit doivent étre au moins au 20 caractaires")
      */
     private $shortDescription;
 
@@ -123,7 +126,7 @@ class Product
         return $this->mainPicture;
     }
 
-    public function setMainPicture(string $mainPicture): self
+    public function setMainPicture(?string $mainPicture): self
     {
         $this->mainPicture = $mainPicture;
 
@@ -135,7 +138,7 @@ class Product
         return $this->shortDescription;
     }
 
-    public function setShortDescription(string $shortDescription): self
+    public function setShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 
