@@ -13,7 +13,26 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
+
 {
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+
+    public function renderMenuList()
+    {
+        //1- aller chercher la category dans la base donées
+        $categories = $this->categoryRepository->findAll();
+        //2- renvoyer le rendu html sous la form response ($form->render)
+
+        return $this->render('category/_menu.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
     /**
      * @Route("/admin/category/create", name="category_create")
      */
@@ -23,9 +42,9 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $category->setSlug(strtolower($slluger->slug($category->getName())));
             $em->persist($category);
             $em->flush();
@@ -33,7 +52,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $formCat = $form->createView();  
+        $formCat = $form->createView();
 
         return $this->render('category/create.html.twig', [
             'formCat' => $formCat
@@ -43,24 +62,24 @@ class CategoryController extends AbstractController
     /**
      *@Route ("/admin/category/{id}/edit", name="category_edit")
      */
-    public function edit($id, CategoryRepository $categoryRepository,SluggerInterface $slluger, Request $request, EntityManagerInterface $em )
+    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em)
     {
         $category = $categoryRepository->find($id);
 
         $form = $this->createForm(CategoryType::class, $category);
-       
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $category->setSlug(strtolower($slluger->slug($category->getName())));
-           $em->flush($category);
+            $em->flush($category);
 
-        return $this->redirectToRoute('home');
-    }
+            return $this->redirectToRoute('home');
+        }
 
-         $formCat = $form->createView();
+        $formCat = $form->createView();
 
-          
+
         return $this->render('category/edit.html.twig', [
             'category' => $category,
             'formCat' => $formCat
