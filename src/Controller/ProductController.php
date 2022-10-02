@@ -59,26 +59,15 @@ class ProductController extends AbstractController
     public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
     {
 
-      $product = new Product();
-      $product->setName('salyt') ;
-            
-
-      $resultat = $validator->validate($product);
- 
-        if ($resultat->count() > 0) {
-            dd("il y' a une errour", $resultat);
-        }
-        dd("tous vas bien");
-
         $product = $productRepository->find($id);
 
         $form = $this->createForm(ProductType::class, $product);
         //  $form->setData($product);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            $product->setSlug(strtolower($slluger->slug($product->getName())));
-            $em->flush($product);
+        if ($form->isSubmitted() && $form->isValid()) {  
+            // $product->setSlug(strtolower($slluger->slug($product->getName())));
+            $em->flush();
 
             //    $url = $urlGenerator->generate('product_show',[
             //        'category_show' => $product->getCategory()->getSlug(),

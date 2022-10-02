@@ -438,5 +438,7 @@ $classes[] = 'Doctrine\\ORM\\Mapping\\Id';
 $classes[] = 'Doctrine\\ORM\\Mapping\\GeneratedValue';
 $classes[] = 'Doctrine\\ORM\\Mapping\\Column';
 $classes[] = 'Doctrine\\ORM\\Mapping\\OneToMany';
+$classes[] = 'Symfony\\Component\\Validator\\Constraints\\NotBlank';
+$classes[] = 'Symfony\\Component\\Validator\\Constraints\\Length';
 $classes[] = 'Doctrine\\ORM\\Mapping\\ManyToOne';
 Preloader::preload($classes);
