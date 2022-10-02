@@ -2196,6 +2196,10 @@
       <call method="addRuntimeLoader">
         <argument type="service" id="twig.runtime_loader"/>
       </call>
+      <call method="addGlobal">
+        <argument>categoryRepository</argument>
+        <argument type="service" id="App\Repository\CategoryRepository"/>
+      </call>
       <call method="registerUndefinedFilterCallback">
         <argument type="collection">
           <argument type="service" id="twig.missing_extension_suggestor"/>
