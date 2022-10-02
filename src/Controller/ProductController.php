@@ -57,11 +57,11 @@ class ProductController extends AbstractController
      *@Route("/admin/product/{id}/edit", name="product_edit")
      */
     public function edit($id, ProductRepository $productRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
-    {
+    {  
 
         $product = $productRepository->find($id);
 
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product, ["validation_groups" => ["large-name", "with-price"]]);
         //  $form->setData($product);
         $form->handleRequest($request);
 
