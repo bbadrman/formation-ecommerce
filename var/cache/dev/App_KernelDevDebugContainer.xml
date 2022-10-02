@@ -293,6 +293,7 @@
     <service id="App\Controller\CategoryController" class="App\Controller\CategoryController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Repository\CategoryRepository"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.g9CqTPp.App\Controller\CategoryController"/>
       </call>
