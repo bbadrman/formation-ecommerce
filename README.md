@@ -75,3 +75,6 @@ composer require debug
     'symfony make:user User
 
     il cree une entity user avec repository et modife le fichie security.yaml
+  ### Autowiring
+   "symfony debug:autowiring "
+   pour montrer le service possible par exemple symfony debug:autowiring password
