@@ -83,3 +83,5 @@ composer require debug
    'symfony make:auth'
      il cree une fichier comment tu l'appel par exemple LoginFormAuth 
      et update security.yaml
+  ### Les Routage et Proprity
+    @Route("/{slug}", name="product_category", priority=-1)  pour reste cet route la dernier ou priority=1 pour lancer au premiere , vous peuvez aussi savoir l'aurdre grace a debug:route
