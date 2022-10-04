@@ -70,3 +70,8 @@ composer require debug
     il ajouter dans la fichier bundel 
        Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     et il modife la  fichier security.yaml
+
+  ### make:user
+    'symfony make:user User
+
+    il cree une entity user avec repository et modife le fichie security.yaml
