@@ -5,6 +5,11 @@
 {% block body %}
 
     <h1>Connexion</h1>
+ {{ form_start(formLogin)}}
 
+ {{ form_widget(formLogin) }}
+
+<button type="submit" class="btn btn-success">Connexion</button>
+ {{ form_end(formLogin) }}
  
 {% endblock %}
