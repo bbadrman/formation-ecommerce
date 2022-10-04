@@ -64,3 +64,9 @@ composer require debug
   ### pour persiste dans la db  il faut d'abord inject EntityManagerInterface $em
       apres en $em->persiste();  //preparation du données selemeent en premiere creation   pas en modife et remove
             et  $em->flush();
+
+  ### Install composant du security
+    'composer req security'  
+    il ajouter dans la fichier bundel 
+       Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    et il modife la  fichier security.yaml
