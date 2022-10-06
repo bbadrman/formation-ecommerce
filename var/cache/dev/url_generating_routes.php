@@ -24,6 +24,7 @@ return [
     'product_edit' => [['id'], ['_controller' => 'App\\Controller\\ProductController::edit'], [], [['text', '/edit'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/product']], [], []],
     'products_create' => [[], ['_controller' => 'App\\Controller\\ProductController::create'], [], [['text', '/admin/product/create']], [], []],
     'login_security' => [[], ['_controller' => 'App\\Controller\\SecurityController::login'], [], [['text', '/login']], [], []],
+    'logout_security' => [[], ['_controller' => 'App\\Controller\\SecurityController::logout'], [], [['text', '/logout']], [], []],
     'test' => [['age'], ['age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age' => '\\d+'], [['variable', '/', '\\d+', 'age', true], ['text', '/test']], [], []],
     'index' => [[], ['_controller' => 'App\\Controller\\TestController::index'], [], [['text', '/']], [], []],
     'product_category' => [['slug'], ['_controller' => 'App\\Controller\\ProductController::category'], [], [['variable', '/', '[^/]++', 'slug', true]], [], []],

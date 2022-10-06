@@ -27,6 +27,8 @@ security:
                 check_path: login_security
                 username_parameter: login[email]
                 password_parameter: login[password]
+            logout:
+                path: logout_security
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
