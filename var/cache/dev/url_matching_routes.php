@@ -21,6 +21,7 @@ return [
         ],
         '/admin/product/create' => [[['_route' => 'products_create', '_controller' => 'App\\Controller\\ProductController::create'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'login_security', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
+        '/logout' => [[['_route' => 'logout_security', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
