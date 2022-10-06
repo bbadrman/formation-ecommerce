@@ -19,9 +19,16 @@
 
 			</ul>
 			<ul class="navbar-nav">
+
+			{% if app.user %}
+			<li class="nav-item"><a href="{{ path('logout_security')}}" class="btn btn-danger">Logout</a></li>
+			{% else %}
+				
 			<li class="nav-item"><a href="" class="nav-link">Inscription</a></li>
-			<li class="nav-item"><a href="" class="btn btn-success">Login</a></li>
-			<li class="nav-item"><a href="" class="btn btn-danger">Logout</a></li>
+			
+			<li class="nav-item"><a href="{{ path('login_security')}}" class="btn btn-success">Login</a></li>
+			
+			{% endif %}
 			</ul>
 		</div>
 	</div>
