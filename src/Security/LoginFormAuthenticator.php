@@ -13,7 +13,8 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
     public function supports(Request $request)
     {
-        // todo
+        return $request->attributes->get('_route') === 'login_security'
+        && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
