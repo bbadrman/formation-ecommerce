@@ -12,19 +12,21 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class LoginFormAuthenticator extends AbstractGuardAuthenticator
 {
     protected $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder){
-         $this->encoder = $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
     }
 
     public function supports(Request $request)
     {
         return $request->attributes->get('_route') === 'login_security'
-        && $request->isMethod('POST');
+            && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
@@ -36,7 +38,12 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         // verifie le email correspondant
-        return $userProvider->loadUserByUsername($credentials['email']);
+        try {
+
+            return $userProvider->loadUserByUsername($credentials['email']);
+        } catch (UsernameNotFoundException $e) {
+            throw new AuthenticationException("Cette adresse email ne correspondant pas");
+        }
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -44,7 +51,12 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
         // verifier que le mot de pass tapez correspondant on du base données
         //$credentials['password'] = $user->getPassword();
 
-    return $this->encoder->isPasswordValid($user, $credentials['password']);
+        $isValid = $this->encoder->isPasswordValid($user, $credentials['password']);
+
+        if (!$isValid) {
+            throw new AuthenticationException("Les informations de connexion ne correspondant pas");
+        }
+        return true;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -55,7 +67,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-       return new RedirectResponse('/');
+        return new RedirectResponse('/');
     }
 
     public function start(Request $request, AuthenticationException $authException = null)

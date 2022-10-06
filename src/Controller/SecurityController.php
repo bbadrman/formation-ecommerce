@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $utils): Response
     {
-        $form = $this->createForm(LoginType::class);
+        $form = $this->createForm(LoginType::class, ['email' => $utils->getLastUsername()]);
 
         //  dump($utils->getLastAuthenticationError(), $utils->getLastUsername());
 
