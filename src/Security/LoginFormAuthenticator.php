@@ -47,7 +47,7 @@ class LoginFormAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // todo
+        dd('Failure', $exception);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
