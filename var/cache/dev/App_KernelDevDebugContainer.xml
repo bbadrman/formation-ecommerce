@@ -381,7 +381,9 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Security\LoginFormAuthenticator" class="App\Security\LoginFormAuthenticator" autowire="true" autoconfigure="true"/>
+    <service id="App\Security\LoginFormAuthenticator" class="App\Security\LoginFormAuthenticator" autowire="true" autoconfigure="true">
+      <argument type="service" id="security.user_password_encoder.generic"/>
+    </service>
     <service id="App\Taxes\Calculator" class="App\Taxes\Calculator" autowire="true" autoconfigure="true">
       <argument type="service" id="monolog.logger"/>
       <argument>20</argument>
