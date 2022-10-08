@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class CartController extends AbstractController
 {
@@ -43,8 +44,10 @@ class CartController extends AbstractController
         // dd($session->get('cart'));*
 
         /** @var FlashBag */
-        $flashBag = $session->getBag('flashes');
-        $flashBag->add('success', "Le produit à bien été ajouté au panier ");
+        // $flashBag = $session->getBag('flashes');
+        $this->addFlash('success', "Le produit à bien été ajouté au panier ");
+
+        // $flashBag->add('success', "Le produit à bien été ajouté au panier ");
 
         // $request->getSession()->remove('cart');
 
