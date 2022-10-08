@@ -15,7 +15,7 @@ return [
     '_profiler_router' => [['token'], ['_controller' => 'web_profiler.controller.router::panelAction'], [], [['text', '/router'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], []],
     '_profiler_exception' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::body'], [], [['text', '/exception'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], []],
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], []],
-    'cart_add' => [['id'], ['_controller' => 'App\\Controller\\CartController::add'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/cart/add']], [], []],
+    'cart_add' => [['id'], ['_controller' => 'App\\Controller\\CartController::add'], ['id' => '\\d+'], [['variable', '/', '\\d+', 'id', true], ['text', '/cart/add']], [], []],
     'category_create' => [[], ['_controller' => 'App\\Controller\\CategoryController::create'], [], [['text', '/admin/category/create']], [], []],
     'category_edit' => [['id'], ['_controller' => 'App\\Controller\\CategoryController::edit'], [], [['text', '/edit'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/category']], [], []],
     'hello' => [['nom'], ['nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], [], [['variable', '/', '[^/]++', 'nom', true], ['text', '/hello']], [], []],
