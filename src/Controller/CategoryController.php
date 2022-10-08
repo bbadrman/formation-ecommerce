@@ -7,10 +7,12 @@ use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class CategoryController extends AbstractController
 
@@ -62,8 +64,20 @@ class CategoryController extends AbstractController
     /**
      *@Route ("/admin/category/{id}/edit", name="category_edit")
      */
-    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em)
+    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, Security $security)
     {
+        $user = $security->getUser();
+        
+        if ($user === null) {
+            return $this->redirectToRoute('login_security');
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles())) {
+
+
+            throw new AccessDeniedException("Vous n'avez pas le droite d'access a cette ressource");
+        }
+
         $category = $categoryRepository->find($id);
 
         $form = $this->createForm(CategoryType::class, $category);
