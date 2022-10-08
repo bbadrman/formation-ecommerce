@@ -368,7 +368,9 @@
     <service id="App\Form\ProductType" class="App\Form\ProductType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
-    <service id="App\Form\Type\PriceType" class="App\Form\Type\PriceType" autowire="true" autoconfigure="true"/>
+    <service id="App\Form\Type\PriceType" class="App\Form\Type\PriceType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -776,12 +778,14 @@
       <argument type="collection">
         <argument>Symfony\Component\Form\Extension\Core\Type</argument>
         <argument>App\Form</argument>
+        <argument>App\Form\Type</argument>
         <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
       </argument>
       <argument type="collection">
         <argument>App\Form\CategoryType</argument>
         <argument>App\Form\LoginType</argument>
         <argument>App\Form\ProductType</argument>
+        <argument>App\Form\Type\PriceType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FileType</argument>
@@ -1121,7 +1125,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension" public="false">
-      <argument type="service" id=".service_locator.BTeAUpQ"/>
+      <argument type="service" id=".service_locator.gJbbwj7"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -4127,6 +4131,8 @@
     <service id=".abstract.instanceof.App\Form\LoginType" class="App\Form\LoginType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ProductType" class="App\Form\ProductType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\ProductType" class="App\Form\ProductType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Type\PriceType" class="App\Form\Type\PriceType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\Type\PriceType" class="App\Form\Type\PriceType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ProductRepository" class="App\Repository\ProductRepository" autowire="true" abstract="true"/>
@@ -4454,12 +4460,11 @@
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
-    <service id=".service_locator.YvsqGRo" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.Ox2EMUK" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
         <argument key="em" type="service" id="doctrine.orm.default_entity_manager"/>
-        <argument key="security" type="service" id="security.helper"/>
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
@@ -4496,11 +4501,11 @@
         <argument key="calculator" type="service" id="App\Taxes\Calculator"/>
       </argument>
     </service>
-    <service id=".service_locator.sYTe2Gp" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.3gKz4QE" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CategoryController::create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.YvsqGRo"/>
+        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.Ox2EMUK"/>
         <argument key="App\Controller\HomeController::home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController::category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController::create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4515,7 +4520,7 @@
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
         <argument key="App\Controller\CategoryController:create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.YvsqGRo"/>
+        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.Ox2EMUK"/>
         <argument key="App\Controller\HomeController:home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController:category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController:create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4587,12 +4592,13 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.BTeAUpQ" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.gJbbwj7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\CategoryType" type="service" id="App\Form\CategoryType"/>
         <argument key="App\Form\LoginType" type="service" id="App\Form\LoginType"/>
         <argument key="App\Form\ProductType" type="service" id="App\Form\ProductType"/>
+        <argument key="App\Form\Type\PriceType" type="service" id="App\Form\Type\PriceType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service" id="form.type.entity"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service" id="form.type.choice"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ColorType" type="service" id="form.type.color"/>
@@ -4931,12 +4937,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.sYTe2Gp"/>
+      <argument type="service" id=".service_locator.3gKz4QE"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.sYTe2Gp"/>
+      <argument type="service" id=".service_locator.3gKz4QE"/>
     </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
@@ -5300,7 +5306,7 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.sYTe2Gp"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.3gKz4QE"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

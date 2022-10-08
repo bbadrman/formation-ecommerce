@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -63,6 +64,7 @@ class CategoryController extends AbstractController
 
     /**
      *@Route ("/admin/category/{id}/edit", name="category_edit")
+     *@IsGranted("ROLE_ADMIN", message="Vous n'avez pas le droite d'access a cette options")
      */
     public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em)
     {
