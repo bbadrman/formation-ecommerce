@@ -3606,15 +3606,7 @@
       <argument type="service" id="security.authentication.retry_entry_point"/>
       <argument type="service" id="monolog.logger.security" on-invalid="null"/>
     </service>
-    <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false">
-      <call method="add">
-        <argument type="service" id=".security.request_matcher.5dJADCx"/>
-        <argument type="collection">
-          <argument>ROLE_ADMIN</argument>
-        </argument>
-        <argument>null</argument>
-      </call>
-    </service>
+    <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false"/>
     <service id="security.context_listener" class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
       <tag name="monolog.logger" channel="security"/>
       <argument type="service" id="security.untracked_token_storage"/>
@@ -4101,9 +4093,6 @@
         <argument key="security.firewall.map.context.main" type="service" id="security.firewall.map.context.main"/>
       </argument>
     </service>
-    <service id=".security.request_matcher.5dJADCx" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-      <argument>^/admin</argument>
-    </service>
     <service id="security.command.user_password_encoder" class="Symfony\Bundle\SecurityBundle\Command\UserPasswordEncoderCommand" public="false">
       <tag name="console.command" command="security:encode-password"/>
       <tag name="container.no_preload"/>
@@ -4465,11 +4454,12 @@
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
-    <service id=".service_locator.Ox2EMUK" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.YvsqGRo" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
         <argument key="em" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="security" type="service" id="security.helper"/>
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
@@ -4506,11 +4496,11 @@
         <argument key="calculator" type="service" id="App\Taxes\Calculator"/>
       </argument>
     </service>
-    <service id=".service_locator.3gKz4QE" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.sYTe2Gp" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CategoryController::create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.Ox2EMUK"/>
+        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController::home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController::category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController::create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4525,7 +4515,7 @@
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
         <argument key="App\Controller\CategoryController:create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.Ox2EMUK"/>
+        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController:home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController:category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController:create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4941,12 +4931,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.3gKz4QE"/>
+      <argument type="service" id=".service_locator.sYTe2Gp"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.3gKz4QE"/>
+      <argument type="service" id=".service_locator.sYTe2Gp"/>
     </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
@@ -5310,7 +5300,7 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.3gKz4QE"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.sYTe2Gp"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
