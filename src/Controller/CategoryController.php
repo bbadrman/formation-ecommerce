@@ -64,19 +64,21 @@ class CategoryController extends AbstractController
     /**
      *@Route ("/admin/category/{id}/edit", name="category_edit")
      */
-    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, Security $security)
+    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em)
     {
-        $user = $security->getUser();
+       
+       $this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Vous n'avez pas le droite d'access a cette ressource");
+        // $user = $this->getUser();
         
-        if ($user === null) {
-            return $this->redirectToRoute('login_security');
-        }
+        // if ($user === null) {
+        //     return $this->redirectToRoute('login_security');
+        // }
 
-        if (!in_array("ROLE_ADMIN", $user->getRoles())) {
+        // if ($this->isGranted("ROLE_ADMIN") === false) {
 
 
-            throw new AccessDeniedException("Vous n'avez pas le droite d'access a cette ressource");
-        }
+        //     throw new AccessDeniedException("Vous n'avez pas le droite d'access a cette ressource");
+        // }
 
         $category = $categoryRepository->find($id);
 
