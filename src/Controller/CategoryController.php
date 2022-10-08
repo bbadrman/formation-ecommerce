@@ -66,7 +66,7 @@ class CategoryController extends AbstractController
     /**
      *@Route ("/admin/category/{id}/edit", name="category_edit")
      */
-    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em)
+    public function edit($id, CategoryRepository $categoryRepository, SluggerInterface $slluger, Request $request, EntityManagerInterface $em, Security $security)
     {
        
        //$this->denyAccessUnlessGranted("ROLE_ADMIN", null, "Vous n'avez pas le droite d'access a cette ressource");
@@ -77,15 +77,19 @@ class CategoryController extends AbstractController
             throw new NotFoundHttpException("Cette Categorie n'existe pas");
         }
 
-        $user = $this->getUser();
+        // $security->isGranted('CAN_EDIT', $category);
 
-        if(!$user){
-           return $this->redirectToRoute("login_security");
-        }
+        $this->denyAccessUnlessGranted('CAN_EDIT', $category, "Vous n'étes pas le propriétaire de cette categorie");
+
+        // $user = $this->getUser();
+
+        // if(!$user){
+        //    return $this->redirectToRoute("login_security");
+        // }
         
-        if($user !== $category->getOwner()){
-            throw new AccessDeniedException("Vous n'étes pas le propriétaire de cette categorie");
-        }
+        // if($user !== $category->getOwner()){
+        //     throw new AccessDeniedException("Vous n'étes pas le propriétaire de cette categorie");
+        // }
 
 
         $form = $this->createForm(CategoryType::class, $category);

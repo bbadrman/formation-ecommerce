@@ -386,6 +386,9 @@
     <service id="App\Security\LoginFormAuthenticator" class="App\Security\LoginFormAuthenticator" autowire="true" autoconfigure="true">
       <argument type="service" id="security.user_password_encoder.generic"/>
     </service>
+    <service id="App\Security\Voter\CategoryVoter" class="App\Security\Voter\CategoryVoter" autowire="true" autoconfigure="true">
+      <tag name="security.voter"/>
+    </service>
     <service id="App\Taxes\Calculator" class="App\Taxes\Calculator" autowire="true" autoconfigure="true">
       <argument type="service" id="monolog.logger"/>
       <argument>20</argument>
@@ -4139,6 +4142,8 @@
     <service id=".abstract.instanceof.App\Repository\ProductRepository" class="App\Repository\ProductRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Security\Core\Authorization\Voter\VoterInterface.0.App\Security\Voter\CategoryVoter" class="App\Security\Voter\CategoryVoter" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Security\Voter\CategoryVoter" class="App\Security\Voter\CategoryVoter" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.WaGDpDt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4460,11 +4465,12 @@
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
-    <service id=".service_locator.Ox2EMUK" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.YvsqGRo" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="categoryRepository" type="service" id="App\Repository\CategoryRepository"/>
         <argument key="em" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="security" type="service" id="security.helper"/>
         <argument key="slluger" type="service" id="slugger"/>
       </argument>
     </service>
@@ -4501,11 +4507,11 @@
         <argument key="calculator" type="service" id="App\Taxes\Calculator"/>
       </argument>
     </service>
-    <service id=".service_locator.3gKz4QE" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.sYTe2Gp" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CategoryController::create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.Ox2EMUK"/>
+        <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController::home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController::category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController::create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4520,7 +4526,7 @@
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
         <argument key="App\Controller\CategoryController:create" type="service" id=".service_locator.u6SDQ6O"/>
-        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.Ox2EMUK"/>
+        <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController:home" type="service" id=".service_locator.JnHMbEU"/>
         <argument key="App\Controller\ProductController:category" type="service" id=".service_locator.zAmj.kw"/>
         <argument key="App\Controller\ProductController:create" type="service" id=".service_locator.u6SDQ6O"/>
@@ -4751,6 +4757,10 @@
       <argument type="service" id="security.access.simple_role_voter"/>
       <argument type="service" id="debug.event_dispatcher"/>
     </service>
+    <service id="debug.security.voter.App\Security\Voter\CategoryVoter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
+      <argument type="service" id="App\Security\Voter\CategoryVoter"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
     <service id="security.logout.listener.csrf_token_clearing" class="Symfony\Component\Security\Http\EventListener\CsrfTokenClearingLogoutListener" public="false">
       <tag name="kernel.event_subscriber"/>
       <argument type="service" id="security.csrf.token_storage"/>
@@ -4925,6 +4935,7 @@
       <argument type="iterator">
         <argument type="service" id="debug.security.voter.security.access.authenticated_voter"/>
         <argument type="service" id="debug.security.voter.security.access.simple_role_voter"/>
+        <argument type="service" id="debug.security.voter.App\Security\Voter\CategoryVoter"/>
       </argument>
       <argument>affirmative</argument>
       <argument>false</argument>
@@ -4937,12 +4948,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.3gKz4QE"/>
+      <argument type="service" id=".service_locator.sYTe2Gp"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.3gKz4QE"/>
+      <argument type="service" id=".service_locator.sYTe2Gp"/>
     </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
@@ -5306,7 +5317,7 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.3gKz4QE"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.sYTe2Gp"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
