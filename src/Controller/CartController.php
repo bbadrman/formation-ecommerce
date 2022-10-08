@@ -39,7 +39,7 @@ class CartController extends AbstractController
         //6. Enregistrer le tableau mis à jour dans la session
 
         $session->set('cart', $cart);
-        dd($session->get('cart'));
+        // dd($session->get('cart'));
 
         // $request->getSession()->remove('cart');
         
