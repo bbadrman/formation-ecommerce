@@ -40,12 +40,13 @@ return [
                         .'|(*:159)'
                     .')'
                 .')'
-                .'|/admin/category/([^/]++)/edit(*:198)'
-                .'|/hello(?:/([^/]++))?(*:226)'
-                .'|/([^/]++)/([^/]++)(*:252)'
-                .'|/admin/product/([^/]++)/edit(*:288)'
-                .'|/test(?:/(\\d+))?(*:312)'
-                .'|/([^/]++)(*:329)'
+                .'|/cart/add/([^/]++)(*:187)'
+                .'|/admin/category/([^/]++)/edit(*:224)'
+                .'|/hello(?:/([^/]++))?(*:252)'
+                .'|/([^/]++)/([^/]++)(*:278)'
+                .'|/admin/product/([^/]++)/edit(*:314)'
+                .'|/test(?:/(\\d+))?(*:338)'
+                .'|/([^/]++)(*:355)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -56,12 +57,13 @@ return [
         136 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         149 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         159 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        198 => [[['_route' => 'category_edit', '_controller' => 'App\\Controller\\CategoryController::edit'], ['id'], null, null, false, false, null]],
-        226 => [[['_route' => 'hello', 'nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], ['nom'], null, null, false, true, null]],
-        252 => [[['_route' => 'product_show', '_controller' => 'App\\Controller\\ProductController::show'], ['category_slug', 'slug'], null, null, false, true, null]],
-        288 => [[['_route' => 'product_edit', '_controller' => 'App\\Controller\\ProductController::edit'], ['id'], null, null, false, false, null]],
-        312 => [[['_route' => 'test', 'age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        329 => [
+        187 => [[['_route' => 'cart_add', '_controller' => 'App\\Controller\\CartController::add'], ['id'], null, null, false, true, null]],
+        224 => [[['_route' => 'category_edit', '_controller' => 'App\\Controller\\CategoryController::edit'], ['id'], null, null, false, false, null]],
+        252 => [[['_route' => 'hello', 'nom' => 'world', '_controller' => 'App\\Controller\\HelloController::hello'], ['nom'], null, null, false, true, null]],
+        278 => [[['_route' => 'product_show', '_controller' => 'App\\Controller\\ProductController::show'], ['category_slug', 'slug'], null, null, false, true, null]],
+        314 => [[['_route' => 'product_edit', '_controller' => 'App\\Controller\\ProductController::edit'], ['id'], null, null, false, false, null]],
+        338 => [[['_route' => 'test', 'age' => '0', '_controller' => 'App\\Controller\\TestController::test'], ['age'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        355 => [
             [['_route' => 'product_category', '_controller' => 'App\\Controller\\ProductController::category'], ['slug'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
