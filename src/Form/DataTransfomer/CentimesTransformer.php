@@ -6,7 +6,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 
 
-class CentimesTransfsormer implements DataTransformerInterface
+class CentimesTransformer implements DataTransformerInterface
 
 {
     public function transform($value){
