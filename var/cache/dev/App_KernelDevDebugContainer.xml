@@ -373,7 +373,6 @@
     <service id="App\Form\CategoryType" class="App\Form\CategoryType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
-    <service id="App\Form\DataTransfomer\CentimesTransformer" class="App\Form\DataTransfomer\CentimesTransformer" autowire="true" autoconfigure="true"/>
     <service id="App\Form\LoginType" class="App\Form\LoginType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -2383,6 +2382,10 @@
       <call method="addGlobal">
         <argument>categoryRepository</argument>
         <argument type="service" id="App\Repository\CategoryRepository"/>
+      </call>
+      <call method="addGlobal">
+        <argument>cartService</argument>
+        <argument type="service" id="App\Cart\CartService"/>
       </call>
       <call method="registerUndefinedFilterCallback">
         <argument type="collection">
