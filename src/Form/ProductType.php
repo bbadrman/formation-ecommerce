@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Product;
 use App\Entity\Category;
-use App\Fom\Type\PriceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
@@ -66,42 +65,6 @@ class ProductType extends AbstractType
             ]);
 
 
-        // $builder->get('price')->addModelTransformer(new CentimesTransformer);
-        //  $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
-        //    $product = $event->getData();
-
-        //    if ($product->getPrice() !== null) {
-        //       $product->setPrice($product->getPrice() * 100 );
-
-        //    }
-        //  });       
-
-        //  $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-        //     $form = $event->getForm();
-
-        //     /** @var Product */
-
-        //     $product = $event->getData();
-
-        //     if($product->getPrice() !== null) {
-
-        //         $product->setPrice($product->getPrice() / 100);
-        //     }
-
-
-        // if ($product->getId() === null) {
-        //     $form->add('category', EntityType::class, [
-        //         'label' => 'Catégorie',
-
-        //             'placeholder' => '-- choisir une catégorie --',
-        //             'class' => Category::class,
-        //             'choice_label' => function(Category $category) {
-        //                 return strtoupper($category->getName());
-        //             }
-
-        //         ]);
-        // }
-        //  });
 
 
     }
