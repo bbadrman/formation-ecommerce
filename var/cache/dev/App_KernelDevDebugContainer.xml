@@ -314,6 +314,10 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Cart\CartService" class="App\Cart\CartService" autowire="true" autoconfigure="true">
+      <argument type="service" id="session"/>
+      <argument type="service" id="App\Repository\ProductRepository"/>
+    </service>
     <service id="App\Controller\CartController" class="App\Controller\CartController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -4479,11 +4483,17 @@
         <argument key="loader" type="service" id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.IWqJRDA" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.fRuwqKk" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="cartService" type="service" id="App\Cart\CartService"/>
         <argument key="productRepository" type="service" id="App\Repository\ProductRepository"/>
-        <argument key="session" type="service" id="session"/>
+      </argument>
+    </service>
+    <service id=".service_locator.iNxVSOd" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="cartService" type="service" id="App\Cart\CartService"/>
       </argument>
     </service>
     <service id=".service_locator.u6SDQ6O" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
@@ -4535,11 +4545,11 @@
         <argument key="calculator" type="service" id="App\Taxes\Calculator"/>
       </argument>
     </service>
-    <service id=".service_locator.WOxAoTE" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.1GVfuVa" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Controller\CartController::add" type="service" id=".service_locator.IWqJRDA"/>
-        <argument key="App\Controller\CartController::show" type="service" id=".service_locator.IWqJRDA"/>
+        <argument key="App\Controller\CartController::add" type="service" id=".service_locator.fRuwqKk"/>
+        <argument key="App\Controller\CartController::show" type="service" id=".service_locator.iNxVSOd"/>
         <argument key="App\Controller\CategoryController::create" type="service" id=".service_locator.u6SDQ6O"/>
         <argument key="App\Controller\CategoryController::edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController::home" type="service" id=".service_locator.JnHMbEU"/>
@@ -4555,8 +4565,8 @@
         <argument key="kernel::loadRoutes" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::registerContainerConfiguration" type="service" id=".service_locator.C9JCBPC"/>
         <argument key="kernel::terminate" type="service" id=".service_locator.beq5mCo"/>
-        <argument key="App\Controller\CartController:add" type="service" id=".service_locator.IWqJRDA"/>
-        <argument key="App\Controller\CartController:show" type="service" id=".service_locator.IWqJRDA"/>
+        <argument key="App\Controller\CartController:add" type="service" id=".service_locator.fRuwqKk"/>
+        <argument key="App\Controller\CartController:show" type="service" id=".service_locator.iNxVSOd"/>
         <argument key="App\Controller\CategoryController:create" type="service" id=".service_locator.u6SDQ6O"/>
         <argument key="App\Controller\CategoryController:edit" type="service" id=".service_locator.YvsqGRo"/>
         <argument key="App\Controller\HomeController:home" type="service" id=".service_locator.JnHMbEU"/>
@@ -4986,12 +4996,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.WOxAoTE"/>
+      <argument type="service" id=".service_locator.1GVfuVa"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.WOxAoTE"/>
+      <argument type="service" id=".service_locator.1GVfuVa"/>
     </service>
     <service id=".errored..service_locator.beq5mCo.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
     <service id=".errored..service_locator.C9JCBPC.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
@@ -5355,7 +5365,7 @@
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.WaGDpDt" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.WOxAoTE"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.1GVfuVa"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

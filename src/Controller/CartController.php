@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Cart\CartService;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/add/{id}", name="cart_add", requirements={"id":"\d+"})
      */
-    public function add($id, ProductRepository $productRepository, SessionInterface $session)
+    public function add($id, ProductRepository $productRepository, CartService $cartService)
     {
         //0. Securisation :est ce que le produit existe?
 
@@ -25,22 +26,9 @@ class CartController extends AbstractController
         if (!$product) {
             throw $this->createNotFoundException("Produit $id n'existe pas");
         }
-        //1. retrouver le panier dans la session (sous form d'un tableau)
-        //2. si il n'existe pas encore alors prendre un tableau vide 
-        $cart = $session->get('cart', []);
+         
+        $cartService->add($id);
 
-        // [12 => 4, 23=>3, 40=>1]
-        //3. voir si le produit ($id) existe déjà dans le tableau 
-        //4. Si c'est le cas, simplement augmenter la quantité
-        //5. Sinon, ajouter le produit avec la quantité 1
-        if (array_key_exists($id, $cart)) {
-            $cart[$id]++;
-        } else {
-            $cart[$id] = 1;
-        }
-        //6. Enregistrer le tableau mis à jour dans la session
-
-        $session->set('cart', $cart);
         // dd($session->get('cart'));*
 
         /** @var FlashBag */
@@ -60,19 +48,11 @@ class CartController extends AbstractController
     /**
      * @Route("/cart", name="cart_show")
      */
-    public function show(SessionInterface $session, ProductRepository $productRepository){
+    public function show(CartService $cartService) {
 
-        $detailCart = [];
-        $total = 0;
-
-        foreach($session->get('cart') as $id => $qty){
-            $product = $productRepository->find($id);
-            $detailCart[] = [
-                'product' => $product,
-                 'qty' => $qty
-            ];
-            $total += ($product->getPrice() * $qty);
-        }
+        $detailCart = $cartService->getDetailcartItems();
+        $total = $cartService->getTotal();
+        
        return $this->render('cart/index.html.twig', [
         'items' => $detailCart,
         'total' => $total
