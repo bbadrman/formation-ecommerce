@@ -314,6 +314,7 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Cart\CartItem" class="App\Cart\CartItem" autowire="true" autoconfigure="true"/>
     <service id="App\Cart\CartService" class="App\Cart\CartService" autowire="true" autoconfigure="true">
       <argument type="service" id="session"/>
       <argument type="service" id="App\Repository\ProductRepository"/>
