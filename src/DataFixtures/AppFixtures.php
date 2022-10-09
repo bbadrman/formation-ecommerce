@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Entity\Purchase;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -33,19 +34,22 @@ class AppFixtures extends Fixture
         $hash = $this->encoder->encodePassword($admin, 'password');
 
         $admin->setEmail("admin@gmail.com")
-              ->setPassword($hash)
-              ->setFullName("Admin")
-              ->setRoles(['ROLE_ADMIN']);
-              $manager->persist($admin);
+            ->setPassword($hash)
+            ->setFullName("Admin")
+            ->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
 
-        for ($u = 0; $u <5; $u++){
+
+        $users = [];
+        for ($u = 0; $u < 5; $u++) {
 
             $user = new User();
             $user->setEmail($faker->email())
-                 ->setFullName($faker->name())
-                 ->setPassword($hash);
+                ->setFullName($faker->name())
+                ->setPassword($hash);
+
+            $users[] = $user;
             $manager->persist($user);
-              
         }
 
         for ($c = 0; $c < 3; $c++) {
@@ -62,11 +66,26 @@ class AppFixtures extends Fixture
                     ->setCategory($category)
                     ->setShortDescription($faker->paragraph())
                     ->setMainPicture($faker->imageUrl(400, 400, true));
-                    
+
                 $manager->persist($product);
             }
         }
 
+        for ($p = 0; $p < mt_rand(20, 50); $p++) {
+            $purchase = new Purchase();
+
+            $purchase->setFullName($faker->name)
+                ->setAddress($faker->streetAddress())
+                ->setPostalCode($faker->postcode())
+                ->setCity($faker->city())
+                ->setUser($faker->randomElement($users))
+                ->setTotal(mt_rand(2000, 5000));
+
+            if ($faker->boolean(90)) {
+                $purchase->setStatus(Purchase::STATUS_PAID);
+            }
+            $manager->persist($purchase);
+        }
         $manager->flush();
     }
 }
