@@ -79,7 +79,8 @@ class AppFixtures extends Fixture
                 ->setPostalCode($faker->postcode())
                 ->setCity($faker->city())
                 ->setUser($faker->randomElement($users))
-                ->setTotal(mt_rand(2000, 5000));
+                ->setTotal(mt_rand(2000, 5000))
+                ->setPurchasedAt($faker->dateTimeBetween('-6 months'));
 
             if ($faker->boolean(90)) {
                 $purchase->setStatus(Purchase::STATUS_PAID);
