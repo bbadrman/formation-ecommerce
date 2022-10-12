@@ -64,13 +64,15 @@ class Purchase
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="purchases")
+     * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="purchase", orphanRemoval=true)
      */
-    private $products;
+    private $purchaseItems;
+
+    
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->purchaseItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,26 +177,34 @@ class Purchase
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, PurchaseItem>
      */
-    public function getProducts(): Collection
+    public function getPurchaseItems(): Collection
     {
-        return $this->products;
+        return $this->purchaseItems;
     }
 
-    public function addProduct(Product $product): self
+    public function addPurchaseItem(PurchaseItem $purchaseItem): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
+        if (!$this->purchaseItems->contains($purchaseItem)) {
+            $this->purchaseItems[] = $purchaseItem;
+            $purchaseItem->setPurchase($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removePurchaseItem(PurchaseItem $purchaseItem): self
     {
-        $this->products->removeElement($product);
+        if ($this->purchaseItems->removeElement($purchaseItem)) {
+            // set the owning side to null (unless already changed)
+            if ($purchaseItem->getPurchase() === $this) {
+                $purchaseItem->setPurchase(null);
+            }
+        }
 
         return $this;
     }
+
+  
 }
