@@ -7,63 +7,75 @@
 
 	<h1>Votre panier !</h1>
 
-    {% if items | length > 0 %}
-        
-    
+	{% if items | length > 0 %}
 
-	<table class="table">
 
-		<thead>
-			<tr>
-				<th>Produit</th>
-				<th>Prix</th>
-				<th>Qty</th>
-				<th>Total</th>
-                <th></th>
-			</tr>
+		<table class="table">
 
-		</thead>
+			<thead>
+				<tr>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Qty</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
 
-        <tbody>
-        {% for item in items %}
-           <tr>
-            <th>{{ item.product.name }}</th>
-            <th>{{ item.product.price }}</th>
-            <th>
-            <a href="{{ path("cart_add", {'id': item.product.id } )}}? returnToCart=true " class="btn btn-sm btn-primary">
-            <i class="fas fa-plus"></i>
-            </a>
-            {{ item.qty }}
-             <a href="{{ path("cart_decrement", {'id': item.product.id } )}} " class="btn btn-sm btn-primary">
-            <i class="fas fa-minus"></i>
-            </a>
-            
-            </th>
-            <th>{{ item.total }}</th>
-            <th>
-            <a href=" {{ path("cart_delete", {'id': item.product.id } )}} " class="btn btn-sm btn-danger">
-            <i class="fas fa-trash"></i>
-            </a>
-            </th>
-           </tr>
-        {% endfor %}
+			</thead>
 
-        </tbody>
-        <tfoot>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<th>{{ item.product.name }}</th>
+						<th>{{ item.product.price }}</th>
+						<th>
+							<a href="{{ path("cart_add", {'id': item.product.id } )}}? returnToCart=true " class="btn btn-sm btn-primary">
+								<i class="fas fa-plus"></i>
+							</a>
+							{{ item.qty }}
+							<a href="{{ path("cart_decrement", {'id': item.product.id } )}} " class="btn btn-sm btn-primary">
+								<i class="fas fa-minus"></i>
+							</a>
 
-        <tr>
-            <td colspan="3">Total :</td>
-            <td colspan="2"> {{ total }}</td>
-        </tr>
-        
-        </tfoot>
+						</th>
+						<th>{{ item.total }}</th>
+						<th>
+							<a href=" {{ path("cart_delete", {'id': item.product.id } )}} " class="btn btn-sm btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</th>
+					</tr>
+				{% endfor %}
 
-	</table>
+			</tbody>
+			<tfoot>
 
-    {% else %}
-    <h2>Le panier été vide !</h2>
+				<tr>
+					<td colspan="3">Total :</td>
+					<td colspan="2">
+						{{ total }}</td>
+				</tr>
 
-    {% endif %}
+			</tfoot>
+
+		</table>
+
+		<hr>
+
+		<h2>Confirmation de votre commande en remplicant ce formule </h2>
+
+        {{ form_start(confirmationForm) }}
+
+        {{ form_widget(confirmationForm) }}
+
+		<button type="submit" class="btn btn-success">Je confirme !</button>
+
+        {{ form_end(confirmationForm) }}
+
+	{% else %}
+		<h2>Le panier été vide !</h2>
+
+	{% endif %}
 
 
 {% endblock %}
