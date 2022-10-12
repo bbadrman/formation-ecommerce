@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\Category;
 use App\Entity\Purchase;
+use App\Entity\PurchaseItem;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -89,7 +90,17 @@ class AppFixtures extends Fixture
             $selectedProducts = $faker->randomElements($products, mt_rand(3, 5));
 
             foreach ($selectedProducts as $product) {
-                $purchase->addProduct($product);
+                $purchaseItem = new PurchaseItem();
+                $purchaseItem->setProduct($product)
+                             ->setQuantity(mt_rand(1, 3))
+                             ->setProductName($product->getName())
+                             ->setProductPrice($product->getPrice())
+                             ->setTotal(
+                                $purchaseItem->getQuantity()* $purchaseItem->getProductPrice()
+                             )
+                             ->setPurchase($purchase);
+
+                $manager->persist($purchaseItem);
             }
 
             if ($faker->boolean(90)) {
