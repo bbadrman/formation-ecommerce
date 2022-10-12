@@ -51,10 +51,13 @@ class User implements UserInterface
      */
     private $purchases;
 
+   
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->purchases = new ArrayCollection();
+      
     }
 
     public function getId(): ?int
@@ -209,4 +212,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    
+   
+
+    
 }

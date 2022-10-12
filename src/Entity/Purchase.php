@@ -4,14 +4,15 @@ namespace App\Entity;
 
 use App\Repository\PurchaseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
  */
 class Purchase
 {
-    public const STATUS_PENDING = 'PENDING';
     public const STATUS_PAID = 'PAID';
+    public const STATUS_PENDING = 'PENDING';
     
     /**
      * @ORM\Id
@@ -48,7 +49,12 @@ class Purchase
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $status = 'PENDING';
+    private $status =  'PENDING';
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $purchasedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="purchases")
@@ -128,6 +134,18 @@ class Purchase
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPurchasedAt(): ?\DateTimeInterface
+    {
+        return $this->purchasedAt;
+    }
+
+    public function setPurchasedAt(\DateTimeInterface $purchasedAt): self
+    {
+        $this->purchasedAt = $purchasedAt;
 
         return $this;
     }

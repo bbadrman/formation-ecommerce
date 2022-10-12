@@ -24,7 +24,7 @@
 						{{p.id}}</td>
 					<td>{{p.address}}<br>{{p.postalCode}},
 						{{p.city}}</td>
-					<td>toto</td>
+					<td> {{p.purchasedAt| date('d/m/Y H:i')}}</td>
 					<td>{{p.total / 100 }}
 						Dhs</td>
 				</tr>
