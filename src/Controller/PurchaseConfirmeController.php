@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Purchase;
 use App\Cart\CartService;
+use App\Entity\PurchaseItem;
 use App\Form\CartConfirmationType;
-use Symfony\Component\Form\FormFactory;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\RouterInterface;
@@ -21,13 +23,15 @@ Class PurchaseConfirmeController
     protected $router;
     protected $security;
     protected $cartService;
+    protected $em;
 
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, Security $security, CartService $cartService) 
+    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, Security $security, CartService $cartService, EntityManagerInterface $em) 
     {
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->security = $security;
         $this->cartService = $cartService;
+        $this->em = $em;
     }
 
     /**
@@ -55,16 +59,43 @@ Class PurchaseConfirmeController
             throw new AccessDeniedException('Vous devez étre connecté pour confirme une commande');
         }
         //4. si il n' ya a pas de produit dans la panier : degager (CartSecurity
-        $cartitems = $this->cartService->getDetailcartItems();
-        if (count($cartitems) === 0) {
+        $cartItems = $this->cartService->getDetailcartItems();
+        if (count($cartItems) === 0) {
             $flashBag->add('warning', 'vous ne pouvez confimer une commande avec une pannier vide ');
             return new RedirectResponse($this->router->generate('cart_show'));
         }
+
         //5. nous allons créer un purchase 
+        /** @var Purchase */
+        $purchase = $form->getData();
+        
         //6. nous allons la lier avec l'utlisateur accutelement connecté (security)
-        //7.nous allons la lier avec les produits qui son pas dans la panier  (CartSecurity 
-        //8. nous allons enregistrer la commande (entitymanagerinterface)
+        $purchase->setUser($user)
+                  ->setPurchasedAt(new \DateTime());
 
+            $this->em->persist($purchase);
+        //7.nous allons la lier avec les produits qui son pas dans la panier  (CartSecurity )
+        $total = 0;
+        foreach($this->cartService->getDetailcartItems() as $cartItem){
+            $purchaseItem = new PurchaseItem();
+            $purchaseItem->setPurchase($purchase)
+                         ->setProduct($cartItem->product)
+                         ->setProductName($cartItem->product->getPrice())
+                         ->setQuantity($cartItem->qty)
+                         ->setTotal($cartItem->getTotal())
+                         ->setProductPrice($cartItem->product->getPrice());
+
+                $total += $cartItem->getTotal();
+
+                $this->em->persist($purchaseItem);
+        }
+
+        $purchase->setTotal($total);
+        //8. nous allons enregistrer la commande (EntityManagerInterface)
+        $this->em->flush();
+    
+        $flashBag->add('success', "Lacommande à bien été enregistréé");
+        return new RedirectResponse($this->router->generate('purchase_index'));
     }
-
+    
 }

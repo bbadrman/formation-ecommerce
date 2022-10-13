@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Purchase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,6 +45,7 @@ class CartConfirmationType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            'data_class' => Purchase::class,
         ]);
     }
 }
