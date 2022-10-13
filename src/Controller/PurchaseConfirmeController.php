@@ -6,7 +6,9 @@ use App\Entity\Purchase;
 use App\Cart\CartService;
 use App\Entity\PurchaseItem;
 use App\Form\CartConfirmationType;
+use App\Purchase\PurchasePersister;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PurchaseItemRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Routing\RouterInterface;
@@ -24,12 +26,14 @@ class PurchaseConfirmeController extends AbstractController
      
     protected $cartService;
     protected $em;
+    protected $persister;
 
-    public function __construct( CartService $cartService, EntityManagerInterface $em)
+    public function __construct(CartService $cartService, EntityManagerInterface $em, PurchasePersister $persister)
     {
          
         $this->cartService = $cartService;
         $this->em = $em;
+        $this->persister = $persister;
     }
 
     /**
@@ -55,8 +59,7 @@ class PurchaseConfirmeController extends AbstractController
             return $this->redirectToRoute('cart_show');
             //return new RedirectResponse($this->router->generate('cart_show'));    par abstractecontroller
         }
-        //3. si je ne suis pas connecté : degager (security)
-        $user = $this->getUser();
+      
         //$user = $this->security->getUser();  par abstractecontroller
 
         // if (!$user) {
@@ -74,36 +77,13 @@ class PurchaseConfirmeController extends AbstractController
         /** @var Purchase */
         $purchase = $form->getData();
 
-        //6. nous allons la lier avec l'utlisateur accutelement connecté (security)
-        $purchase->setUser($user)
-            ->setPurchasedAt(new \DateTime())
-            ->setTotal($this->cartService->getTotal());
-
-        $this->em->persist($purchase);
-        //7.nous allons la lier avec les produits qui son pas dans la panier  (CartSecurity )
- 
-        foreach ($this->cartService->getDetailcartItems() as $cartItem) {
-            $purchaseItem = new PurchaseItem();
-            $purchaseItem->setPurchase($purchase)
-                ->setProduct($cartItem->product)
-                ->setProductName($cartItem->product->getPrice())
-                ->setQuantity($cartItem->qty)
-                ->setTotal($cartItem->getTotal())
-                ->setProductPrice($cartItem->product->getPrice());
-
-        
-
-            $this->em->persist($purchaseItem);
-        }
-
-        
-        //8. nous allons enregistrer la commande (EntityManagerInterface)
-        $this->em->flush();
+        $this->persister->storePurchase($purchase);
 
         //videz la panier apres la commande 
         $this->cartService->empty();
 
         $this->addFlash('success', "Lacommande à bien été enregistréé");
+        
         return $this->redirectToRoute('purchase_index');
         //return new RedirectResponse($this->router->generate('purchase_index'));    par abstractecontroller
     }
