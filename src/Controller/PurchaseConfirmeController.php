@@ -76,11 +76,12 @@ class PurchaseConfirmeController extends AbstractController
 
         //6. nous allons la lier avec l'utlisateur accutelement connecté (security)
         $purchase->setUser($user)
-            ->setPurchasedAt(new \DateTime());
+            ->setPurchasedAt(new \DateTime())
+            ->setTotal($this->cartService->getTotal());
 
         $this->em->persist($purchase);
         //7.nous allons la lier avec les produits qui son pas dans la panier  (CartSecurity )
-        $total = 0;
+ 
         foreach ($this->cartService->getDetailcartItems() as $cartItem) {
             $purchaseItem = new PurchaseItem();
             $purchaseItem->setPurchase($purchase)
@@ -90,14 +91,17 @@ class PurchaseConfirmeController extends AbstractController
                 ->setTotal($cartItem->getTotal())
                 ->setProductPrice($cartItem->product->getPrice());
 
-            $total += $cartItem->getTotal();
+        
 
             $this->em->persist($purchaseItem);
         }
 
-        $purchase->setTotal($total);
+        
         //8. nous allons enregistrer la commande (EntityManagerInterface)
         $this->em->flush();
+
+        //videz la panier apres la commande 
+        $this->cartService->empty();
 
         $this->addFlash('success', "Lacommande à bien été enregistréé");
         return $this->redirectToRoute('purchase_index');

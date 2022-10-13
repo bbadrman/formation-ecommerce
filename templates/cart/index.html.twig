@@ -60,18 +60,23 @@
 		</table>
 
 		<hr>
+		{# {% if is_granted('ROLE_USER') %} #}
+		{% if app.user %}
+			<h2>Confirmation de votre commande en remplicant ce formule
+			</h2>
 
-		<h2>Confirmation de votre commande en remplicant ce formule
-		</h2>
+			{{ form_start(confirmationForm, {'action': path('purchase_confirm')}) }}
 
-		{{ form_start(confirmationForm, {'action': path('purchase_confirm')}) }}
+			{{ form_widget(confirmationForm) }}
 
-		{{ form_widget(confirmationForm) }}
+			<button type="submit" class="btn btn-success">Je confirme !</button>
 
-		<button type="submit" class="btn btn-success">Je confirme !</button>
-
-		{{ form_end(confirmationForm) }}
-
+			{{ form_end(confirmationForm) }}
+			{% else %}
+			<h2>Vous devez étre connecté pour confirmer votre commande!</h2>
+			<a href="{{path('login_security')}}" class="btn btn-success">Connexion</a>
+			ou <a href="#">Créez un compte</a>
+		{% endif %}
 	{% else %}
 		<h2>Le panier été vide !</h2>
 
