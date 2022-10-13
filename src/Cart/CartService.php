@@ -76,6 +76,11 @@ class CartService
         $this->saveCart($cart);
     }
 
+    // vider le panier apres la commande
+    public function empty(){
+        $this->saveCart([]);
+    }
+    
     public function getTotal(): int
     {
         $total = 0;
