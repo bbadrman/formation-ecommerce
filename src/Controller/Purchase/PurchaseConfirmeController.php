@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Purchase;
 
 use App\Entity\Purchase;
 use App\Cart\CartService;
@@ -80,11 +80,14 @@ class PurchaseConfirmeController extends AbstractController
         $this->persister->storePurchase($purchase);
 
         //videz la panier apres la commande 
-        $this->cartService->empty();
+        //$this->cartService->empty();
 
-        $this->addFlash('success', "Lacommande à bien été enregistréé");
+        //$this->addFlash('success', "Lacommande à bien été enregistréé");
         
-        return $this->redirectToRoute('purchase_index');
+
+        return $this->redirectToRoute('purchase_payment_form', [
+            'id' => $purchase->getId()
+        ]);
         //return new RedirectResponse($this->router->generate('purchase_index'));    par abstractecontroller
     }
 }
