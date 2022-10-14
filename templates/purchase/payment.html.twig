@@ -1,9 +1,58 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-    Payer votre commande avec stripe
+	Payer votre commande avec stripe
 {% endblock %}
 
 {% block body %}
-    <h1>Payer votre commande avec stripe</h1>
+	<h1>Payer votre commande avec stripe</h1>
+
+	<form id="payment-form">
+		<div id="card-element"><!--ne touche pas--></div>
+		<button id="submit" class="btn btn-success">
+			<div class="spinner hidden" id="spinner"></div>
+			<span id="button-text">Payer avec strip !</span>
+		</button>
+		<p id="cart-error" role="alert"></p>
+	</form>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+		const clientSecret = '{{ clientSecret }}';
+        const stripe = Stripe("pk_test_skAkzIH4j6xhto9DAJW46SqY");
+
+        const elements = stripe.elements();
+        const card = elements.create("card");
+
+        card.mount("#card-element");
+        card.on("change", function (event) {
+            document.querySelector("button").disabled = event.empty;
+            document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+        });
+
+        const form = document.getElementById("payment-form");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                card: card
+                  }
+                })
+                .then(function(result) {
+                if (result.error) {
+                console.log(result.error.message);
+                 } else {
+                    // the payment success 
+                    window.location.href = "{{ url('purhcase_payment_success', {'id': purchase.id }) }}";
+                    }
+                    });
+                });
+	</script>
+
 {% endblock %}
