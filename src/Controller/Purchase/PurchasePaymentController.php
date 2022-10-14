@@ -27,10 +27,11 @@ class PurchasePaymentController extends AbstractController
             'amount' => $purchase->getTotal(),
             'currency' => 'eur'
          ]);   
-         dd($intent->client_secret);    
+         //dd($intent->client_secret);    
 
         return $this->render('purchase/payment.html.twig', [
             'clientSecret' => $intent->client_secret,
+            'purchase' => $purchase
         ]);
     }
 }
