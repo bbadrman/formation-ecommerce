@@ -6,39 +6,49 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: "../src/"
+    exclude:
+      - "../src/DependencyInjection/"
+      - "../src/Entity/"
+      - "../src/Kernel.php"
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
-        tags: ['controller.service_arguments']
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  App\Controller\:
+    resource: "../src/Controller/"
+    tags: ["controller.service_arguments"]
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    App\Taxes\Calculator:
-      arguments:
-        $tva: 20
-    # pour avoir l'injection indepondance il faut met (Slugify $slugify) sur la fonction
-    Cocur\Slugify\Slugify: ~
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
+  App\Taxes\Calculator:
+    arguments:
+      $tva: 20
+  # pour avoir l'injection indepondance il faut met (Slugify $slugify) sur la fonction
+  Cocur\Slugify\Slugify: ~
 
-    App\Taxes\Detector:
-      arguments:
-        $seuil: 100
+  App\Taxes\Detector:
+    arguments:
+      $seuil: 100
 
-    App\Stripe\StripeService:
-      arguments:
-        $secretKey: '%env(STRIPE_SECRET_KEY)%'
-        $publicKey: '%env(STRIPE_PUBLIC_KEY)%'
+  App\Stripe\StripeService:
+    arguments:
+      $secretKey: "%env(STRIPE_SECRET_KEY)%"
+      $publicKey: "%env(STRIPE_PUBLIC_KEY)%"
+
+  App\EventDispatcher\PrenomListener:
+    tags:
+      [
+        {
+          name: kernel.event_listener,
+          event: kernel.request,
+          method: addPrenomToAttribute,
+        },
+      ]
