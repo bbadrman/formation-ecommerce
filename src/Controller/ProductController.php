@@ -42,7 +42,7 @@ class ProductController extends AbstractController
     public function show($slug, $prenom, ProductRepository $productRepository, Request $request)
     {
 
-        dd($prenom);
+       
         $product = $productRepository->findOneBy([
             'slug' => $slug,
         ]);
