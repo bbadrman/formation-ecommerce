@@ -39,6 +39,7 @@ class PurchasePaymentSuccessController extends AbstractController
 
         //3. je vide la pannier
         $cartService->empty();
+        
         // lancer une evenement qui permettre aux autres developpeurs de reagir à la pris d'un commande
 
         $purchaseEvent = new PurchaseSuccessEvent($purchase);
