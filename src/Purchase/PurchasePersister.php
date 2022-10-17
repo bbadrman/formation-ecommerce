@@ -26,10 +26,10 @@ class PurchasePersister {
     public function storePurchase(Purchase $purchase){
         //Integrer tour ce qu'il faut et persiste la purchase
         //6. nous allons la lier avec l'utlisateur accutelement connecté (security)
-        $purchase->setUser($this->security->getUser())
+        $purchase->setUser($this->security->getUser());
 
-            ->setPurchasedAt(new DateTime())
-            ->setTotal($this->cartService->getTotal());
+            //->setPurchasedAt(new DateTime())
+            //->setTotal($this->cartService->getTotal());
 
         $this->em->persist($purchase);
         //7.nous allons la lier avec les produits qui son pas dans la panier  (CartSecurity )
