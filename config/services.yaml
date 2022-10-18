@@ -46,6 +46,11 @@ services:
   App\Doctrine\Listener\ProductSlugListener:
     tags: [{ name: "doctrine.orm.entity_listener", event: prePersist, entity: App\Entity\Product }]
 
+  App\Doctrine\Listener\CategorySlugListener:
+    autowire: true 
+    tags: 
+        - { name: doctrine.orm.entity_listener, event: prePersist, entity: App\Entity\Category }
+
 
 
     
