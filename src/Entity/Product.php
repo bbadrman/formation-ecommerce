@@ -9,8 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass=ProductRepository::class) 
  */
 class Product
 {
