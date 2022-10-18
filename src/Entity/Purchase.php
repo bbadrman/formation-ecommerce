@@ -103,7 +103,7 @@ class Purchase
             $total += $item->getTotal();
         }
         $this->total = $total;
-    }
+     }
 
     public function getId(): ?int
     {
