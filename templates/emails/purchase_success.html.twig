@@ -22,11 +22,11 @@
 					{{ item.Quantity }}
 				</td>
 				<td>
-					{{ item.productPrice }}
+					{{ item.productPrice | amount }}
 				</td>
 				<td>
-					{{ item.total / 100 }}
-					Dhs
+					{{ item.total | amount }}
+					
 				</td>
 			</tr>
 		{% endfor %}
@@ -36,8 +36,8 @@
 		<tr>
 			<td colspan="3">Total:</td>
 			<td>
-				{{ purchase.total / 100}}
-				Dhs
+				{{ purchase.total | amount }}
+			 
 			</td>
 		</tr>
 	</tfoot>
