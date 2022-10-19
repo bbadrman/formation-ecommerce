@@ -22,6 +22,7 @@ class PurchasePaymentController extends AbstractController
     public function showCartForm($id, PurchaseRepository $purchaseRepository, StripeService $stripeService){
 
         $purchase = $purchaseRepository->find($id);
+       
         if( 
         !$purchase|| 
         ($purchase && $purchase->getUser() !== $this->getUser()) ||
