@@ -11,9 +11,7 @@ class PrenomSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'kernel.request' => 'addPrenomToAttribute',
-            'kernel.controller' => 'test1',
-            'kernel.response' => 'test2'
+            'kernel.request' => 'addPrenomToAttribute', 
 
         ];
     }
