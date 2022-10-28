@@ -16,7 +16,7 @@ class PurchasePaymentSuccessController extends AbstractController
 {
 
     /**
-     * @Route("/purhcase/terminate/{id}", name="purhcase_payment_success")
+     * @Route("/purhcase/terminate/{id}", name="purchase_payment_success")
      * @IsGranted("ROLE_USER")
      */
     public function success($id, PurchaseRepository $pruchaseRepository, EntityManagerInterface $em, CartService $cartService, EventDispatcherInterface $dispatcher){

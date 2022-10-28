@@ -25,7 +25,7 @@
 			Panier {{ cartService.total | amount }} </a></li>
 
 			{% if app.user %}
-			<li class="nav-item"><a href="#" class="nav-link">Mes commandes</a></li>
+			<li class="nav-item"><a href="{{ path('purchase_index')}}" class="nav-link">Mes commandes</a></li>
 			<li class="nav-item"><a href="{{ path('logout_security')}}" class="btn btn-danger">Logout</a></li>
 			{% else %}
 				

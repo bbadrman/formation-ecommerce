@@ -8,13 +8,13 @@
 	<h1>Payer votre commande avec stripe</h1>
 
 	<form id="payment-form">
-		<div id="card-element"><!--ne touche pas--></div>
-		<button id="submit" class="btn btn-success">
-			<div class="spinner hidden" id="spinner"></div>
-			<span id="button-text">Payer avec strip !</span>
-		</button>
-		<p id="cart-error" role="alert"></p>
-	</form>
+      <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+      <button id="submit" class="btn btn-success">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Payer avec Stripe !</span>
+      </button>
+      <p id="card-error" role="alert"></p>
+    </form>
 {% endblock %}
 
 {% block javascripts %}
@@ -23,8 +23,8 @@
 	<script src="https://js.stripe.com/v3/"></script>
 	<script>
 		const clientSecret = '{{ clientSecret }}';
-        const stripePublickey = '{{ stripePublicKey }}'; 
-        const redirectAfterSuccessUrl = "{{ url('purhcase_payment_success', {'id': purchase.id }) }}";
+        const stripePublicKey = '{{ stripePublicKey }}'; 
+        const redirectAfterSuccessUrl = "{{ url('purchase_payment_success', {'id': purchase.id }) }}";
        
 	</script>
     <script src="js/payment.js"></script>

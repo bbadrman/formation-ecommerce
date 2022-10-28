@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Confirmation de commande - La Boutique Française
+{% endblock %}
+
+{% block body %}
+    <h2>
+        Confirmation de commande
+    </h2>
+    {% for item in items %}
+    <p>
+        Bonjour 
+        <strong>
+            {{ item.product.name }} avec Prix unitaire du {{ item.product.price | amount('$', '.', ',') }}
+     
+        </strong>
+        ,
+        <br/>
+        Avec Montant Total :
+       
+              <strong>
+         {{ item.total | amount }}
+     
+        </strong>
+
+       
+     
+
+        <br/>
+        Nous vous remercions pour votre commande n°
+        <strong>
+            {{ item.product.id }}
+        </strong>
+        .
+        <br/>
+        Une confirmation vient de vous être envoyée par email à l'adresse 
+        <strong>
+           {# {{ item.product.user }} #}
+        </strong>
+        .
+                
+        <hr>
+            Votre commande sera livrée à l'adresse suivante : 
+
+            {% for purchase in purchases %}
+                   {{ purchase.address}}
+            {% endfor %}
+           
+         
+            <br/>
+            {# {{ order.delivery|raw }} #}
+            <hr>
+                Pour suivre votre commande, rendez-vous dans votre 
+                <a href="{{ path('purchase_index') }}">
+                    compte
+                </a>
+                .
+                    
+            </p>
+            {% endfor %}
+        {% endblock %}
+        
